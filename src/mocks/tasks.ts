@@ -8,7 +8,9 @@ export const mockTasks: Task[] = [
     description: "L'évier de la cuisine fuit. Demander un devis et un créneau cette semaine.",
     dueDate: "2026-11-20",
     status: "todo",
+    source: "manual",
     createdAt: "2026-11-13T09:00:00.000Z",
+    updatedAt: "2026-11-13T09:00:00.000Z",
   },
   {
     id: "t2",
@@ -16,7 +18,9 @@ export const mockTasks: Task[] = [
     description: "Prendre rendez-vous en mairie, apporter deux photos et un justificatif de domicile.",
     dueDate: "2026-12-15",
     status: "todo",
+    source: "manual",
     createdAt: "2026-11-13T09:05:00.000Z",
+    updatedAt: "2026-11-13T09:05:00.000Z",
   },
   {
     id: "t3",
@@ -24,7 +28,9 @@ export const mockTasks: Task[] = [
     description: "Slides sur l'avancement de la roadmap et les KPI pour le comité de pilotage.",
     dueDate: "2026-11-27",
     status: "in_progress",
+    source: "manual",
     createdAt: "2026-11-12T18:30:00.000Z",
+    updatedAt: "2026-11-12T18:30:00.000Z",
   },
   {
     id: "t4",
@@ -32,7 +38,9 @@ export const mockTasks: Task[] = [
     description: "L'adapter aux postes de Product Manager au Canada et ajouter les projets perso.",
     dueDate: "2026-11-30",
     status: "in_progress",
+    source: "manual",
     createdAt: "2026-11-10T20:00:00.000Z",
+    updatedAt: "2026-11-10T20:00:00.000Z",
   },
   {
     id: "t5",
@@ -40,6 +48,8 @@ export const mockTasks: Task[] = [
     description: "Payer en ligne avant l'échéance pour éviter les frais.",
     dueDate: "2026-11-10",
     status: "done",
+    source: "manual",
     createdAt: "2026-11-05T08:00:00.000Z",
+    updatedAt: "2026-11-05T08:00:00.000Z",
   },
 ];

@@ -41,3 +41,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Personal tasks: private data, never committed (the example file is).
+/data/tasks.json

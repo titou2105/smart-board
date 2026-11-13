@@ -3,7 +3,7 @@
   "project": {
     "name": "Smart Board",
     "tagline": "« Dis-le, c'est rangé. » Une to-do où l'assistant te pose les questions qui manquent.",
-    "updatedAt": "2026-11-13"
+    "updatedAt": "2026-11-14"
   },
   "milestones": [
     {
@@ -140,14 +140,15 @@
       "epic": "E1",
       "title": "Format des tâches",
       "size": "S",
-      "status": "todo",
+      "status": "done",
       "story": "En tant que porteur du projet, je veux un format de fichier unique pour les tâches, afin que Claude Code et l'app lisent et écrivent les mêmes données.",
       "criteria": [
         "Une tâche contient titre, description, échéance, statut, source (claude-code, manual, plus tard mail), dates de création et de mise à jour.",
         "Ajouter un champ optionnel plus tard ne casse pas les tâches existantes (testé) ; le fichier porte un schemaVersion.",
         "data/tasks.json est exclu de git ; data/tasks.example.json est versionné.",
         "Une fonction de src/core/ valide le fichier et signale clairement une tâche invalide."
-      ]
+      ],
+      "doneAt": "2026-11-14"
     },
     {
       "id": "US-1.2",

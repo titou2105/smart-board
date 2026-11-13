@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "tasks": [
+    {
+      "id": "t-example-1",
+      "title": "Appeler le plombier",
+      "description": "L'évier de la cuisine fuit. Demander un devis et un créneau cette semaine.",
+      "dueDate": "2026-11-20",
+      "status": "todo",
+      "source": "claude-code",
+      "category": "perso",
+      "createdAt": "2026-11-13T09:00:00.000Z",
+      "updatedAt": "2026-11-13T09:00:00.000Z"
+    }
+  ]
+}

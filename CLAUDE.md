@@ -19,6 +19,7 @@ l'assistant pose les questions qui manquent (titre, description, échéance) et 
   puis ouvrir `docs/cockpit/index.html` (double-clic).
 - Tests : `npm test` · Types : `npm run typecheck` · Linter : `npm run lint` · Build : `npm run build`
 - Ajouter un composant shadcn : `npx shadcn@latest add <composant>`
+- Vérifier le fichier de tâches : `npm run tasks:check` (à lancer après chaque écriture dans `data/tasks.json`)
 
 ## Structure
 - `src/core/` — logique métier **pure** (aucun import React/Next) : type `Task`, champs obligatoires,
@@ -51,6 +52,12 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
   (30 nov., 18 déc., 7 fév., 28 fév.), 8 EPICs + 7 après l'horizon, 26 US. UI reportée à un atelier (US-2.1).
   Prochaine étape : US-1.1 (format des tâches), puis US-1.2 (`/tache`).
   Blocages : aucun. Questions ouvertes : horizon fin février ou plan B, fournisseur mail perso, création du dépôt GitHub.
+- 2026-11-14 — US-1.1 faite : format `data/tasks.json` (`src/core/task-file.ts`, 11 tests), script `tasks:check`.
+  Premières vraies tâches capturées à la main dans la conversation (prototype de `/tache`) : 3 tâches (2 perso, 1 pro).
+  Appris pour `/tache` : Thomas donne ses tâches en vrac et par catégorie ; regrouper les questions par tâche marche
+  bien ; repérer les dépendances (ETA ↔ passeport) apporte de la valeur.
+  Prochaine étape : US-1.2 (commande `/tache`), puis US-1.4 (i18n) et US-1.5 (vue liste).
+  Blocages : aucun.
 
 ## Décisions
 <!-- Claude ajoute ici les choix importants : date — décision — pourquoi -->
@@ -80,6 +87,11 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
   les questions tranchées et ouvertes deviennent des décisions dans `backlog.json`, le cockpit est un fichier HTML
   autonome. Ancien serveur `scripts/cockpit.ts` et dépendance `marked` supprimés. Pourquoi : un seul format pour
   tous les projets, rien écrit deux fois (le JSON avait déjà divergé de la vision).
+
+- 2026-11-14 — Champ optionnel `category` (texte libre, ex. « perso », « pro ») ajouté au modèle. Pourquoi : Thomas
+  classe spontanément ses tâches ainsi ; optionnel, il ne casse rien.
+- 2026-11-14 — Fichier de tâches : `{ schemaVersion: 1, tasks: [...] }` ; les champs inconnus sont conservés à la
+  validation. Pourquoi : ajouter des champs plus tard sans migration.
 
 ## Feuille de route
 - Détail : `docs/product.md` et le cockpit (`docs/cockpit/index.html`).
