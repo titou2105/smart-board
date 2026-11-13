@@ -1,7 +1,7 @@
 {
   "project": "Smart Board",
   "updatedAt": "2026-11-13",
-  "version": "v0.1 — brouillon à relire",
+  "version": "v0.2",
   "visionDoc": "/vision",
   "statuses": {
     "todo": "À faire",
@@ -14,177 +14,209 @@
     "L": "3+ sessions"
   },
   "milestones": [
-    {
-      "id": "M1",
-      "title": "Tableau utilisable",
-      "goal": "Créer, déplacer, modifier ses cartes ; tout est sauvegardé.",
-      "estimate": "~8 sessions",
-      "targetDate": null
-    },
-    {
-      "id": "M2",
-      "title": "Assistant de saisie",
-      "goal": "Une phrase → une carte complète, en mode mock.",
-      "estimate": "~7 sessions",
-      "targetDate": null
-    },
-    {
-      "id": "M3",
-      "title": "Démo en ligne",
-      "goal": "URL publique + README portfolio.",
-      "estimate": "~4 sessions",
-      "targetDate": "2027-01-15"
-    },
-    {
-      "id": "M4",
-      "title": "Vrai assistant",
-      "goal": "Claude comprend le langage naturel.",
-      "estimate": "~6 sessions",
-      "targetDate": null
-    },
-    {
-      "id": "LATER",
-      "title": "Après le MVP",
-      "goal": "EPICs pas encore découpés en US.",
-      "estimate": null,
-      "targetDate": null
-    }
+    { "id": "M1", "title": "Capture via Claude Code", "goal": "Dicter ses tâches dans Claude Code et les voir dans l'app.", "estimate": "~7 sessions", "targetDate": "2026-11-30" },
+    { "id": "M2", "title": "App utilisable et en ligne", "goal": "Ajout/modification manuels, démo Vercel, README.", "estimate": "~8 sessions", "targetDate": "2026-12-18" },
+    { "id": "M3", "title": "Partout, avec l'assistant", "goal": "Tâches dans le cloud, ajout depuis le téléphone, assistant dans l'app.", "estimate": "~19 sessions", "targetDate": "2027-02-07" },
+    { "id": "M4", "title": "Premières intégrations", "goal": "Boîte de réception + mails perso.", "estimate": "~9 sessions", "targetDate": "2027-02-28" },
+    { "id": "LATER", "title": "Après l'horizon", "goal": "EPICs pas encore découpés en US.", "estimate": null, "targetDate": null }
   ],
   "epics": [
-    { "id": "E1", "milestone": "M1", "title": "Tableau Kanban", "description": "Voir, créer, déplacer et modifier ses cartes à la main." },
-    { "id": "E2", "milestone": "M2", "title": "Créer une carte en parlant à l'assistant", "description": "Le cœur de la promesse : une phrase, quelques questions, une carte complète." },
-    { "id": "E3", "milestone": "M3", "title": "Déploiement web", "description": "Une démo en ligne, gratuite, toujours à jour." },
-    { "id": "E4", "milestone": "M3", "title": "Vitrine portfolio", "description": "Rendre le projet lisible en 1 minute pour un recruteur." },
-    { "id": "E5", "milestone": "M4", "title": "Brancher Claude", "description": "Une vraie compréhension du langage, avec des coûts maîtrisés." },
-    { "id": "E6", "milestone": "LATER", "title": "Champs enrichis", "description": "Priorité, projet, sous-tâches, estimation de durée, proposés par l'assistant." },
-    { "id": "E7", "milestone": "LATER", "title": "Dictée vocale", "description": "Parler au lieu de taper." },
-    { "id": "E8", "milestone": "LATER", "title": "« Ma journée »", "description": "L'assistant propose chaque matin 3 tâches à attaquer." },
-    { "id": "E9", "milestone": "LATER", "title": "Compte et synchronisation", "description": "Compte optionnel (Supabase) pour retrouver son tableau partout." },
-    { "id": "E10", "milestone": "LATER", "title": "App mobile", "description": "Expo, en réutilisant src/core/." },
-    { "id": "E11", "milestone": "LATER", "title": "Rappels", "description": "Notification avant l'échéance." }
+    { "id": "E1", "milestone": "M1", "title": "Capturer ses tâches avec Claude Code", "description": "Dicter une tâche dans Claude Code, être relancé sur ce qui manque, la retrouver dans l'app." },
+    { "id": "E2", "milestone": "M2", "title": "Gérer ses tâches dans l'app", "description": "Atelier UI, ajout et modification à la main." },
+    { "id": "E3", "milestone": "M2", "title": "Démo en ligne et vitrine", "description": "Une démo publique sur Vercel et un README portfolio." },
+    { "id": "E4", "milestone": "M3", "title": "Finitions", "description": "Suppression, urgences, cockpit public, synchronisation GitHub Issues." },
+    { "id": "E5", "milestone": "M3", "title": "Mes tâches partout", "description": "Retrouver et ajouter ses tâches depuis le téléphone comme depuis l'ordinateur." },
+    { "id": "E6", "milestone": "M3", "title": "L'assistant dans l'app", "description": "La saisie en une phrase, d'abord via Claude Code, puis via l'API Claude." },
+    { "id": "E7", "milestone": "M4", "title": "Boîte de réception", "description": "Rien n'entre dans la liste sans validation." },
+    { "id": "E8", "milestone": "M4", "title": "Mails perso", "description": "Repérer les mails qui demandent une action et proposer une tâche." },
+    { "id": "E9", "milestone": "LATER", "title": "Champs enrichis", "description": "Priorité, projet, sous-tâches, durée (le modèle est prévu pour)." },
+    { "id": "E10", "milestone": "LATER", "title": "Dictée vocale", "description": "Parler au lieu de taper." },
+    { "id": "E11", "milestone": "LATER", "title": "« Ma journée »", "description": "L'assistant propose chaque matin 3 tâches à attaquer." },
+    { "id": "E12", "milestone": "LATER", "title": "App mobile native", "description": "Expo, en réutilisant src/core/." },
+    { "id": "E13", "milestone": "LATER", "title": "Rappels", "description": "Notification avant l'échéance." },
+    { "id": "E14", "milestone": "LATER", "title": "Agenda", "description": "Synchroniser les échéances, tâches de suivi de réunion." },
+    { "id": "E15", "milestone": "LATER", "title": "Partage vers Smart Board", "description": "Créer une tâche depuis n'importe quelle app du téléphone." }
   ],
   "stories": [
     {
-      "id": "US-1.1", "epic": "E1", "title": "Voir mon tableau", "size": "M", "status": "todo",
-      "story": "En tant qu'utilisateur, je veux voir mes tâches dans trois colonnes (À faire, En cours, Fait), afin de savoir d'un coup d'œil où j'en suis.",
+      "id": "US-1.1", "epic": "E1", "title": "Format des tâches", "size": "S", "status": "todo",
+      "story": "En tant que porteur du projet, je veux un format de fichier unique pour les tâches, afin que Claude Code et l'app lisent et écrivent les mêmes données.",
       "criteria": [
-        "Chaque carte affiche son titre et son échéance.",
-        "Au premier lancement, le tableau contient les tâches d'exemple (src/mocks/tasks.ts).",
-        "Sur mobile, les colonnes s'empilent ou défilent horizontalement, sans casser la page."
+        "Une tâche contient titre, description, échéance, statut, source (claude-code, manual, plus tard mail), dates de création et de mise à jour.",
+        "Ajouter un champ optionnel plus tard ne casse pas les tâches existantes (testé) ; le fichier porte un schemaVersion.",
+        "data/tasks.json est exclu de git ; data/tasks.example.json est versionné.",
+        "Une fonction de src/core/ valide le fichier et signale clairement une tâche invalide."
       ]
     },
     {
-      "id": "US-1.2", "epic": "E1", "title": "Déplacer une carte", "size": "M", "status": "todo",
-      "story": "En tant qu'utilisateur, je veux faire glisser une carte d'une colonne à l'autre, afin de suivre l'avancement.",
+      "id": "US-1.2", "epic": "E1", "title": "Dicter une tâche avec /tache", "size": "M", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux écrire /tache appeler le plombier avant vendredi dans Claude Code, afin d'enregistrer une tâche complète sans formulaire.",
       "criteria": [
-        "Glisser-déposer à la souris et au doigt.",
-        "Une alternative sans glisser existe (menu « Déplacer vers… »), pour l'accessibilité."
+        "Claude pose une question par champ manquant (titre, description, échéance), une à la fois.",
+        "Les dates relatives (« vendredi », « dans 2 semaines ») sont converties et affichées en clair pour validation.",
+        "Claude montre la tâche finale et n'écrit dans data/tasks.json qu'après ma validation."
       ]
     },
     {
-      "id": "US-1.3", "epic": "E1", "title": "Créer et modifier une carte", "size": "S", "status": "todo",
-      "story": "En tant qu'utilisateur, je veux ouvrir une carte et changer son titre, sa description ou son échéance, afin de corriger ou préciser une tâche.",
+      "id": "US-1.3", "epic": "E1", "title": "Mettre à jour une tâche avec /tache", "size": "S", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux dire « plombier : c'est fait » ou « décale le passeport à lundi », afin de tenir ma liste à jour sans ouvrir l'app.",
       "criteria": [
-        "L'enregistrement est refusé tant qu'un champ obligatoire est vide, avec un message clair.",
-        "La même fenêtre sert à créer une carte à la main (sans l'assistant)."
+        "Claude retrouve la tâche, montre le changement et l'applique après validation.",
+        "En cas de doute entre plusieurs tâches, Claude demande laquelle."
       ]
     },
     {
-      "id": "US-1.4", "epic": "E1", "title": "Retrouver mon tableau", "size": "S", "status": "todo",
-      "story": "En tant qu'utilisateur, je veux retrouver mes cartes quand je rouvre l'app, afin de ne rien perdre.",
-      "criteria": [
-        "Les cartes sont sauvegardées dans le navigateur (localStorage).",
-        "Le stockage passe par une interface TaskRepository, pour brancher Supabase plus tard sans toucher aux écrans."
-      ]
+      "id": "US-1.4", "epic": "E1", "title": "Interface bilingue EN/FR", "size": "S", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux l'app dans ma langue, afin de la comprendre sans effort.",
+      "criteria": ["La langue suit celle du navigateur, avec l'anglais par défaut ; tous les textes passent par des fichiers en / fr."],
+      "note": "À faire avant US-1.5, pour que chaque écran soit bilingue dès sa livraison (voir DoD)."
     },
     {
-      "id": "US-1.5", "epic": "E1", "title": "Supprimer une carte", "size": "S", "status": "todo",
-      "story": "En tant qu'utilisateur, je veux supprimer une carte devenue inutile, afin de garder un tableau propre.",
-      "criteria": ["Une confirmation est demandée avant la suppression."]
-    },
-    {
-      "id": "US-1.6", "epic": "E1", "title": "Repérer les urgences", "size": "S", "status": "todo",
-      "story": "En tant qu'utilisateur, je veux voir quelles cartes sont en retard ou dues aujourd'hui, afin de savoir quoi faire en priorité.",
+      "id": "US-1.5", "epic": "E1", "title": "Voir mes tâches par échéance", "size": "M", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux voir mes tâches regroupées par urgence (En retard, Aujourd'hui, Cette semaine, Plus tard), afin de savoir quoi faire en premier.",
       "criteria": [
-        "Un badge « En retard » ou « Aujourd'hui » s'affiche sur les cartes non terminées concernées.",
-        "Dans chaque colonne, les cartes sont triées par échéance."
-      ]
-    },
-    {
-      "id": "US-2.1", "epic": "E2", "title": "Dire ma tâche en une phrase", "size": "M", "status": "todo",
-      "story": "En tant qu'utilisateur, je veux écrire ma tâche comme elle me vient (« appeler le plombier avant vendredi »), afin de ne pas remplir de formulaire.",
-      "criteria": [
-        "Un champ de saisie unique, accessible depuis le tableau.",
-        "L'assistant remplit le brouillon avec ce qu'il a compris."
-      ]
-    },
-    {
-      "id": "US-2.2", "epic": "E2", "title": "Répondre aux questions de l'assistant", "size": "M", "status": "todo",
-      "story": "En tant qu'utilisateur, je veux que l'assistant me demande ce qui manque, une question à la fois, afin que chaque carte soit complète.",
-      "criteria": [
-        "L'assistant pose une question par champ manquant (titre, description, échéance).",
-        "Une réponse invalide (ex. une date incompréhensible) entraîne une nouvelle question.",
-        "Je peux abandonner à tout moment, sans créer de carte."
+        "L'app lit data/tasks.json en local, et les données fictives en mode démo, via TaskRepository.",
+        "Les tâches terminées sont repliées en bas."
       ],
-      "note": "Socle déjà en place : findMissingFields (src/core/task.ts) et l'assistant mock, testés."
+      "note": "Vue provisoire, à revoir lors de l'atelier UI (US-2.1)."
     },
     {
-      "id": "US-2.3", "epic": "E2", "title": "Valider la carte avant création", "size": "S", "status": "todo",
-      "story": "En tant qu'utilisateur, je veux voir un aperçu de la carte et pouvoir la corriger, afin que l'assistant ne crée rien que je n'ai pas validé.",
-      "criteria": ["Un aperçu montre les trois champs ; « Créer » ajoute la carte dans « À faire »."]
-    },
-    {
-      "id": "US-2.4", "epic": "E2", "title": "Comprendre les dates en français", "size": "M", "status": "todo",
-      "story": "En tant qu'utilisateur, je veux écrire « demain », « vendredi » ou « dans 2 semaines », afin de ne pas taper de date au format AAAA-MM-JJ.",
+      "id": "US-2.1", "epic": "E2", "title": "Atelier UI", "size": "M", "status": "todo",
+      "story": "En tant que porteur du projet, je veux comparer plusieurs maquettes de vues, afin de choisir une interface qui me convainc vraiment.",
       "criteria": [
-        "Les expressions courantes sont converties en date, en code (sans IA), et affichées pour validation.",
-        "Au moins 15 expressions couvertes par des tests."
+        "Au moins 3 maquettes (dont la liste par échéance), testées sur ordinateur et sur téléphone.",
+        "Décision notée dans le CLAUDE.md (vue par défaut, vues secondaires, données affichées)."
       ]
+    },
+    {
+      "id": "US-2.2", "epic": "E2", "title": "Ajouter une tâche à la main", "size": "S", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux ajouter une tâche dans l'app sans passer par Claude Code, afin de garder la main quand je n'ai pas le terminal.",
+      "criteria": ["L'enregistrement est refusé tant qu'un champ obligatoire est vide, avec un message clair."]
+    },
+    {
+      "id": "US-2.3", "epic": "E2", "title": "Modifier une tâche et changer son statut", "size": "S", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux corriger une tâche et la passer à « en cours » ou « faite », afin de suivre l'avancement.",
+      "criteria": ["Les changements sont enregistrés dans le même fichier que celui de /tache."]
     },
     {
       "id": "US-3.1", "epic": "E3", "title": "Démo publique", "size": "S", "status": "todo",
       "story": "En tant que recruteur, je veux ouvrir la démo depuis un lien, afin de tester l'app sans rien installer.",
       "criteria": [
-        "L'app est en ligne sur Vercel (offre gratuite), en mode mock.",
+        "L'app est en ligne sur Vercel (offre gratuite), sur des données fictives.",
         "Chaque push sur main met à jour la démo automatiquement."
       ]
     },
     {
       "id": "US-3.2", "epic": "E3", "title": "Données de démo", "size": "S", "status": "todo",
-      "story": "En tant que visiteur, je veux un tableau d'exemple et un bouton « Réinitialiser », afin de tester sans craindre de tout casser.",
-      "criteria": ["Chaque visiteur a son propre tableau (dans son navigateur)."]
+      "story": "En tant que visiteur, je veux une liste d'exemple et un bouton « Réinitialiser », afin de tester sans craindre de tout casser.",
+      "criteria": ["Chaque visiteur a sa propre liste (dans son navigateur)."]
     },
     {
-      "id": "US-4.1", "epic": "E4", "title": "README portfolio", "size": "M", "status": "todo",
+      "id": "US-3.3", "epic": "E3", "title": "README portfolio", "size": "M", "status": "todo",
       "story": "En tant que recruteur, je veux comprendre le projet en 1 minute depuis GitHub, afin d'évaluer le travail de Thomas.",
       "criteria": [
         "README en anglais avec pitch, lien de démo, captures ou GIF, stack, lancement en local.",
-        "Un lien vers la vision produit et le cockpit."
+        "La capture via Claude Code est expliquée (c'est un point original du projet)."
       ]
     },
     {
-      "id": "US-4.2", "epic": "E4", "title": "Cockpit public", "size": "S", "status": "todo",
+      "id": "US-4.1", "epic": "E4", "title": "Supprimer une tâche", "size": "S", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux supprimer une tâche devenue inutile, afin de garder une liste propre.",
+      "criteria": ["Une confirmation est demandée avant la suppression."]
+    },
+    {
+      "id": "US-4.2", "epic": "E4", "title": "Repérer les urgences", "size": "S", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux un signal visuel sur les tâches en retard ou dues aujourd'hui, afin de ne rien rater.",
+      "criteria": ["Un badge « En retard » ou « Aujourd'hui » s'affiche sur les tâches non terminées concernées."]
+    },
+    {
+      "id": "US-4.3", "epic": "E4", "title": "Cockpit public", "size": "S", "status": "todo",
       "story": "En tant que recruteur, je veux voir la vision et le backlog du projet, afin de constater la démarche produit.",
-      "criteria": ["Le cockpit est accessible en ligne depuis le README."]
+      "criteria": ["Le cockpit et la vision sont accessibles en ligne depuis le README."]
     },
     {
-      "id": "US-5.1", "epic": "E5", "title": "Comprendre le langage naturel", "size": "L", "status": "todo",
-      "story": "En tant qu'utilisateur, je veux que l'assistant comprenne vraiment ma phrase (titre, contexte, date), afin de répondre à moins de questions.",
+      "id": "US-4.4", "epic": "E4", "title": "Synchroniser le backlog avec GitHub Issues", "size": "S", "status": "todo",
+      "story": "En tant que porteur du projet, je veux que les US de backlog.json apparaissent en Issues, afin de les suivre aussi sur GitHub.",
+      "criteria": ["Un script crée ou met à jour les Issues à partir du JSON (le JSON reste la source de vérité)."],
+      "note": "Réutiliser le script de PreDriver Coach. Nécessite le dépôt GitHub."
+    },
+    {
+      "id": "US-5.1", "epic": "E5", "title": "Mes tâches dans le cloud", "size": "M", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux que mes tâches soient stockées en ligne, afin d'y accéder depuis n'importe quel appareil.",
       "criteria": [
-        "LLM_PROVIDER=claude utilise l'API Claude côté serveur ; la clé n'est jamais envoyée au navigateur.",
-        "La réponse de Claude respecte le contrat AssistantTurn (sortie structurée)."
+        "Implémentation Supabase (offre gratuite) de TaskRepository ; les écrans ne changent pas.",
+        "Un script importe une fois les tâches de data/tasks.json.",
+        "/tache écrit dans Supabase."
+      ]
+    },
+    {
+      "id": "US-5.2", "epic": "E5", "title": "Me connecter", "size": "M", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux me connecter avec un lien reçu par mail, afin que personne d'autre ne voie mes tâches.",
+      "criteria": [
+        "Connexion Supabase Auth par lien magique, sans mot de passe.",
+        "Chaque utilisateur ne voit que ses propres tâches (règles de sécurité côté base).",
+        "La démo publique reste accessible sans compte, sur des données fictives."
+      ]
+    },
+    {
+      "id": "US-5.3", "epic": "E5", "title": "Ajouter une tâche depuis mon téléphone", "size": "S", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux ouvrir Smart Board sur mon téléphone comme une app et y ajouter une tâche, afin de capturer une idée n'importe où.",
+      "criteria": [
+        "L'app s'installe sur l'écran d'accueil du téléphone (web app installable).",
+        "L'ajout manuel est confortable sur petit écran."
+      ]
+    },
+    {
+      "id": "US-6.1", "epic": "E6", "title": "Dire ma tâche en une phrase dans l'app", "size": "L", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux écrire ma tâche dans l'app comme dans /tache, afin de ne pas dépendre du terminal.",
+      "criteria": [
+        "Sur l'ordinateur, l'assistant passe par Claude Code (claude -p, abonnement) ; en démo, par le mock.",
+        "La réponse respecte le contrat AssistantTurn de src/core/assistant.ts."
       ],
-      "note": "⚠️ L'API Claude est payante à l'usage (quelques centimes par mois pour un usage perso avec un petit modèle)."
+      "note": "Socle déjà en place : findMissingFields et l'assistant mock, testés."
     },
     {
-      "id": "US-5.2", "epic": "E5", "title": "Maîtriser les coûts", "size": "S", "status": "todo",
-      "story": "En tant que porteur du projet, je veux limiter le nombre d'appels, afin de ne jamais avoir de mauvaise surprise sur la facture.",
-      "criteria": ["Un plafond d'appels par jour, et la démo publique reste en mock."]
+      "id": "US-6.2", "epic": "E6", "title": "Questions de relance et validation", "size": "M", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux que l'assistant me demande ce qui manque puis me montre la tâche, afin de ne rien enregistrer d'incomplet ou de faux.",
+      "criteria": ["Une question par champ manquant ; je peux abandonner à tout moment ; rien n'est créé sans validation."]
     },
     {
-      "id": "US-5.3", "epic": "E5", "title": "Évaluer l'assistant", "size": "M", "status": "todo",
-      "story": "En tant que porteur du projet, je veux un jeu de 20 phrases avec le résultat attendu, afin de mesurer la qualité de l'assistant à chaque changement de prompt.",
+      "id": "US-6.3", "epic": "E6", "title": "Passer à l'API Claude", "size": "M", "status": "todo",
+      "story": "En tant qu'utilisateur sur mon téléphone (et visiteur de la démo), je veux le vrai assistant en ligne, afin de dicter une tâche sans mon PC.",
+      "criteria": [
+        "LLM_PROVIDER=claude utilise l'API côté serveur ; la clé n'est jamais envoyée au navigateur.",
+        "Un plafond d'appels par jour évite toute mauvaise surprise sur la facture."
+      ],
+      "note": "⚠️ L'API Claude est payante à l'usage (quelques centimes par mois avec un petit modèle et un plafond)."
+    },
+    {
+      "id": "US-6.4", "epic": "E6", "title": "Évaluer l'assistant", "size": "M", "status": "todo",
+      "story": "En tant que porteur du projet, je veux un jeu de 20 phrases avec le résultat attendu, afin de mesurer la qualité de l'assistant à chaque changement.",
       "criteria": ["Un script affiche le taux de champs correctement extraits."]
+    },
+    {
+      "id": "US-7.1", "epic": "E7", "title": "Valider les tâches proposées", "size": "M", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux voir les tâches proposées et les accepter, modifier ou rejeter, afin que rien n'entre dans ma liste sans mon accord.",
+      "criteria": ["Une tâche acceptée passe dans la liste avec sa source ; une tâche rejetée disparaît."]
+    },
+    {
+      "id": "US-8.1", "epic": "E8", "title": "Connecter ma boîte mail perso", "size": "L", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux connecter ma boîte mail perso en lecture seule, afin que l'assistant puisse y repérer des tâches.",
+      "criteria": ["Connexion sécurisée (OAuth), lecture seule, aucun mot de passe stocké par l'app."],
+      "note": "⚠️ Fournisseur à confirmer (Gmail, Outlook…) : les API diffèrent."
+    },
+    {
+      "id": "US-8.2", "epic": "E8", "title": "Repérer les mails qui demandent une action", "size": "L", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux que l'assistant propose une tâche quand un mail demande une action, afin de ne plus rien laisser dormir dans ma boîte.",
+      "criteria": [
+        "Chaque proposition arrive dans la boîte de réception avec un lien vers le mail d'origine.",
+        "Seuls le titre, un résumé et le lien sont conservés, pas le contenu complet du mail."
+      ]
+    },
+    {
+      "id": "US-8.3", "epic": "E8", "title": "Couper la connexion", "size": "S", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux déconnecter ma boîte mail en un clic, afin de garder le contrôle sur mes données.",
+      "criteria": ["La déconnexion révoque l'accès et supprime les jetons stockés."]
     }
   ]
 }
