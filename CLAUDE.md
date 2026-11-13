@@ -15,7 +15,8 @@ l'assistant pose les questions qui manquent (titre, description, échéance) et 
 
 ## Commandes
 - Lancer en local : `npm run dev` (http://localhost:3000)
-- Cockpit produit : `npm run cockpit` (http://localhost:4321, vision en HTML sur `/vision`)
+- Cockpit produit : skill `/cockpit` du harnais. Régénérer : `node ~/projets/harnais/global/skills/cockpit/build.mjs`,
+  puis ouvrir `docs/cockpit/index.html` (double-clic).
 - Tests : `npm test` · Types : `npm run typecheck` · Linter : `npm run lint` · Build : `npm run build`
 - Ajouter un composant shadcn : `npx shadcn@latest add <composant>`
 
@@ -26,8 +27,8 @@ l'assistant pose les questions qui manquent (titre, description, échéance) et 
   choisit selon `LLM_PROVIDER`. Côté serveur uniquement.
 - `src/mocks/` — données fictives réalistes (`tasks.ts` : tableau d'exemple).
 - `src/app/` — pages et routes ; `src/components/ui/` — composants shadcn.
-- `docs/product.md` — vision, jalons, EPICs et US. `docs/cockpit/` — `backlog.json` (statuts) + `index.html`.
-- `scripts/cockpit.ts` — serveur local du cockpit.
+- `docs/product.md` — la vision (texte). `docs/cockpit/backlog.json` — jalons, EPIC, US, décisions, risques
+  (source de vérité). `docs/cockpit/index.html` — cockpit généré, ne pas modifier à la main.
 
 ## Variables d'environnement
 Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
@@ -36,7 +37,7 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
 ## Conventions du projet
 - Toute source externe (LLM, stockage) passe par une interface dans `src/core/`, avec une implémentation mock.
 - Code et README en anglais ; commentaires, commits et interface en français (langue de l'UI : question ouverte).
-- Quand une US change de statut, mettre à jour `docs/cockpit/backlog.json`.
+- Quand une US change de statut, mettre à jour `docs/cockpit/backlog.json` puis régénérer le cockpit.
 
 ## Où on en est
 <!-- Mis à jour en fin de session : date — état actuel — prochaine étape — blocages -->
@@ -75,9 +76,13 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
 - 2026-11-13 — Bilingue EN/FR dès le M1, inscrit dans la DoD.
 - 2026-11-13 — Horizon 3 mois, 3 sessions/semaine. Long terme : intégrations (mails perso uniquement, agenda, partage), toujours avec validation.
 - 2026-11-13 — `backlog.json` reste la source de vérité ; GitHub Issues générées par script (US-4.4).
+- 2026-11-13 — Passage au format cockpit commun du harnais (skill `/cockpit`) : `product.md` ne garde que la vision,
+  les questions tranchées et ouvertes deviennent des décisions dans `backlog.json`, le cockpit est un fichier HTML
+  autonome. Ancien serveur `scripts/cockpit.ts` et dépendance `marked` supprimés. Pourquoi : un seul format pour
+  tous les projets, rien écrit deux fois (le JSON avait déjà divergé de la vision).
 
 ## Feuille de route
-- Détail : `docs/product.md` et le cockpit (`npm run cockpit`).
+- Détail : `docs/product.md` et le cockpit (`docs/cockpit/index.html`).
 - [ ] M1 — Capture via Claude Code (E1) — cible 30 novembre 2026
 - [ ] M2 — App utilisable et en ligne (E2, E3) — cible 18 décembre 2026
 - [ ] M3 — Partout, avec l'assistant (E4, E5, E6) — cible 7 février 2027
