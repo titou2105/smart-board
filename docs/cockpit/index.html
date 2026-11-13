@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Board — Cockpit</title>
+  <style>
+    /* Couleurs en variables : un seul endroit à changer pour le thème clair / sombre */
+    :root {
+      --bg: #f6f7f9;
+      --surface: #ffffff;
+      --text: #1b1d22;
+      --muted: #666b75;
+      --border: #e1e4ea;
+      --accent: #5b4bdb;
+      --todo: #8a8f99;
+      --progress: #1c7ed6;
+      --done: #2b8a3e;
+      --bar-bg: #e9ebf0;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #131419;
+        --surface: #1c1e25;
+        --text: #eceef3;
+        --muted: #9a9fab;
+        --border: #2d3039;
+        --accent: #9d92ff;
+        --todo: #8a8f99;
+        --progress: #4dabf7;
+        --done: #51cf66;
+        --bar-bg: #2a2d35;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    main { max-width: 860px; margin: 0 auto; padding: 24px 16px 64px; }
+    h1 { font-size: 26px; margin: 0; }
+    h1 span { color: var(--accent); }
+    .subtitle { color: var(--muted); margin: 4px 0 20px; }
+    .subtitle a { color: var(--accent); }
+
+    .countdown {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 24px;
+    }
+    .countdown strong { font-size: 22px; color: var(--accent); }
+
+    .overview { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 32px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+    .card h3 { margin: 0 0 2px; font-size: 14px; }
+    .meta { color: var(--muted); font-size: 13px; }
+    .bar { height: 8px; background: var(--bar-bg); border-radius: 4px; overflow: hidden; margin: 8px 0 4px; }
+    .bar > div { height: 100%; background: var(--done); }
+
+    section.milestone { margin-bottom: 36px; }
+    section.milestone > h2 { font-size: 20px; margin: 0 0 4px; }
+    section.milestone > p { color: var(--muted); margin: 0 0 14px; }
+    .epic { margin-bottom: 18px; }
+    .epic h3 { font-size: 15px; margin: 0 0 2px; }
+    .epic > p { color: var(--muted); margin: 0 0 8px; font-size: 14px; }
+
+    details.story {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 6px;
+    }
+    details.story summary {
+      cursor: pointer;
+      padding: 10px 12px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      list-style: none;
+    }
+    details.story summary::-webkit-details-marker { display: none; }
+    .story-id { font-weight: 600; font-variant-numeric: tabular-nums; }
+    .story-title { flex: 1; min-width: 140px; }
+    .story-body { padding: 0 12px 12px; font-size: 14px; }
+    .story-body ul { margin: 6px 0; padding-left: 20px; }
+    .note { color: var(--muted); font-style: italic; }
+
+    .badge {
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid currentColor;
+      white-space: nowrap;
+    }
+    .badge.todo { color: var(--todo); }
+    .badge.in_progress { color: var(--progress); }
+    .badge.done { color: var(--done); }
+    .badge.size { color: var(--muted); }
+
+    .error { color: #c92a2a; background: var(--surface); padding: 16px; border-radius: 10px; border: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Smart Board — <span>Cockpit</span></h1>
+    <p class="subtitle" id="subtitle">Chargement du backlog…</p>
+    <div id="countdown"></div>
+    <div class="overview" id="overview"></div>
+    <div id="backlog"></div>
+  </main>
+
+  <script>
+    // Le cockpit est en lecture seule : la source de vérité est backlog.json.
+    // Pour changer un statut, on modifie le JSON, pas cette page.
+
+    const DAY_MS = 24 * 60 * 60 * 1000;
+
+    // Crée un élément avec du texte. textContent (et non innerHTML) évite
+    // qu'un texte du JSON soit interprété comme du HTML.
+    function el(tag, className, text) {
+      const node = document.createElement(tag);
+      if (className) node.className = className;
+      if (text !== undefined && text !== null) node.textContent = text;
+      return node;
+    }
+
+    function formatDate(isoDate) {
+      return new Date(isoDate + "T00:00:00").toLocaleDateString("fr-FR", {
+        day: "numeric", month: "long", year: "numeric",
+      });
+    }
+
+    function storiesOfMilestone(data, milestoneId) {
+      const epicIds = data.epics.filter((e) => e.milestone === milestoneId).map((e) => e.id);
+      return data.stories.filter((s) => epicIds.includes(s.epic));
+    }
+
+    // Prochain jalon avec une date cible pas encore passée.
+    function renderCountdown(data) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const next = data.milestones
+        .filter((m) => m.targetDate && new Date(m.targetDate + "T00:00:00") >= today)
+        .sort((a, b) => a.targetDate.localeCompare(b.targetDate))[0];
+      const box = document.getElementById("countdown");
+      if (!next) return;
+
+      const days = Math.round((new Date(next.targetDate + "T00:00:00") - today) / DAY_MS);
+      const stories = storiesOfMilestone(data, next.id);
+      const doneCount = stories.filter((s) => s.status === "done").length;
+
+      box.className = "countdown";
+      box.append(
+        el("strong", null, days === 0 ? "Aujourd'hui" : `J-${days}`),
+        el("span", null, ` avant ${next.id} — ${next.title} (${formatDate(next.targetDate)})`),
+      );
+      // Les US des jalons précédents doivent aussi être finies pour tenir la date.
+      const before = data.milestones.slice(0, data.milestones.indexOf(next) + 1);
+      const remaining = before
+        .flatMap((m) => storiesOfMilestone(data, m.id))
+        .filter((s) => s.status !== "done").length;
+      box.append(el("div", "meta", `${remaining} US restantes d'ici là (dont ${stories.length - doneCount} dans ${next.id}).`));
+    }
+
+    function renderOverview(data) {
+      const container = document.getElementById("overview");
+      for (const m of data.milestones) {
+        const stories = storiesOfMilestone(data, m.id);
+        if (stories.length === 0) continue; // « Après le MVP » n'a pas encore d'US
+        const doneCount = stories.filter((s) => s.status === "done").length;
+        const percent = Math.round((doneCount / stories.length) * 100);
+
+        const card = el("div", "card");
+        card.append(el("h3", null, `${m.id} — ${m.title}`));
+        const bar = el("div", "bar");
+        const fill = el("div");
+        fill.style.width = percent + "%";
+        bar.append(fill);
+        card.append(bar);
+        card.append(el("div", "meta", `${doneCount}/${stories.length} US faites · ${percent} %`));
+        container.append(card);
+      }
+    }
+
+    function renderStory(data, story) {
+      const details = el("details", "story");
+      const summary = el("summary");
+      summary.append(
+        el("span", "story-id", story.id),
+        el("span", "story-title", story.title),
+        el("span", "badge size", story.size),
+        el("span", `badge ${story.status}`, data.statuses[story.status] ?? story.status),
+      );
+      details.append(summary);
+
+      const body = el("div", "story-body");
+      body.append(el("p", null, story.story));
+      const list = el("ul");
+      for (const criterion of story.criteria) list.append(el("li", null, criterion));
+      body.append(list);
+      if (story.note) body.append(el("p", "note", story.note));
+      details.append(body);
+      return details;
+    }
+
+    function renderBacklog(data) {
+      const container = document.getElementById("backlog");
+      for (const m of data.milestones) {
+        const section = el("section", "milestone");
+        const dateText = m.targetDate ? ` · cible ${formatDate(m.targetDate)}` : "";
+        const estimateText = m.estimate ? ` · ${m.estimate}` : "";
+        section.append(el("h2", null, `${m.id} — ${m.title}`));
+        section.append(el("p", null, `${m.goal}${estimateText}${dateText}`));
+
+        for (const epic of data.epics.filter((e) => e.milestone === m.id)) {
+          const block = el("div", "epic");
+          block.append(el("h3", null, `${epic.id} — ${epic.title}`));
+          block.append(el("p", null, epic.description));
+          for (const story of data.stories.filter((s) => s.epic === epic.id)) {
+            block.append(renderStory(data, story));
+          }
+          section.append(block);
+        }
+        container.append(section);
+      }
+    }
+
+    async function main() {
+      const subtitle = document.getElementById("subtitle");
+      try {
+        // cache: "no-store" pour voir tout de suite les changements du JSON
+        const response = await fetch("backlog.json", { cache: "no-store" });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const data = await response.json();
+
+        const version = data.version ? ` (${data.version})` : "";
+        subtitle.textContent = `Backlog mis à jour le ${formatDate(data.updatedAt)}${version} · `;
+        const link = el("a", null, "vision et plan produit");
+        link.href = data.visionDoc;
+        subtitle.append(link);
+
+        renderCountdown(data);
+        renderOverview(data);
+        renderBacklog(data);
+      } catch (error) {
+        // Cas typique : page ouverte par double-clic (file://), le navigateur bloque la lecture du JSON.
+        subtitle.textContent = "";
+        const box = el("div", "error",
+          `Impossible de charger backlog.json (${error.message}). ` +
+          "Lance le cockpit avec : npm run cockpit, puis ouvre http://localhost:4321.");
+        document.getElementById("backlog").append(box);
+      }
+    }
+
+    main();
+  </script>
+</body>
+</html>

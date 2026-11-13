@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "app",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 3000
+    },
+    {
+      "name": "cockpit",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "cockpit"],
+      "port": 4321
+    }
+  ]
+}

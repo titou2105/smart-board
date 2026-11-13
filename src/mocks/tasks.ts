@@ -1,0 +1,45 @@
+import type { Task } from "@/core/task";
+
+/** Realistic sample board, used in mock mode and for the online demo. */
+export const mockTasks: Task[] = [
+  {
+    id: "t1",
+    title: "Appeler le plombier",
+    description: "L'évier de la cuisine fuit. Demander un devis et un créneau cette semaine.",
+    dueDate: "2026-11-20",
+    status: "todo",
+    createdAt: "2026-11-13T09:00:00.000Z",
+  },
+  {
+    id: "t2",
+    title: "Renouveler le passeport",
+    description: "Prendre rendez-vous en mairie, apporter deux photos et un justificatif de domicile.",
+    dueDate: "2026-12-15",
+    status: "todo",
+    createdAt: "2026-11-13T09:05:00.000Z",
+  },
+  {
+    id: "t3",
+    title: "Préparer la revue produit T4",
+    description: "Slides sur l'avancement de la roadmap et les KPI pour le comité de pilotage.",
+    dueDate: "2026-11-27",
+    status: "in_progress",
+    createdAt: "2026-11-12T18:30:00.000Z",
+  },
+  {
+    id: "t4",
+    title: "Mettre à jour mon CV en anglais",
+    description: "L'adapter aux postes de Product Manager au Canada et ajouter les projets perso.",
+    dueDate: "2026-11-30",
+    status: "in_progress",
+    createdAt: "2026-11-10T20:00:00.000Z",
+  },
+  {
+    id: "t5",
+    title: "Payer la facture d'électricité",
+    description: "Payer en ligne avant l'échéance pour éviter les frais.",
+    dueDate: "2026-11-10",
+    status: "done",
+    createdAt: "2026-11-05T08:00:00.000Z",
+  },
+];

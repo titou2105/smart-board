@@ -1,0 +1,190 @@
+{
+  "project": "Smart Board",
+  "updatedAt": "2026-11-13",
+  "version": "v0.1 — brouillon à relire",
+  "visionDoc": "/vision",
+  "statuses": {
+    "todo": "À faire",
+    "in_progress": "En cours",
+    "done": "Fait"
+  },
+  "sizes": {
+    "S": "1 session",
+    "M": "2 sessions",
+    "L": "3+ sessions"
+  },
+  "milestones": [
+    {
+      "id": "M1",
+      "title": "Tableau utilisable",
+      "goal": "Créer, déplacer, modifier ses cartes ; tout est sauvegardé.",
+      "estimate": "~8 sessions",
+      "targetDate": null
+    },
+    {
+      "id": "M2",
+      "title": "Assistant de saisie",
+      "goal": "Une phrase → une carte complète, en mode mock.",
+      "estimate": "~7 sessions",
+      "targetDate": null
+    },
+    {
+      "id": "M3",
+      "title": "Démo en ligne",
+      "goal": "URL publique + README portfolio.",
+      "estimate": "~4 sessions",
+      "targetDate": "2027-01-15"
+    },
+    {
+      "id": "M4",
+      "title": "Vrai assistant",
+      "goal": "Claude comprend le langage naturel.",
+      "estimate": "~6 sessions",
+      "targetDate": null
+    },
+    {
+      "id": "LATER",
+      "title": "Après le MVP",
+      "goal": "EPICs pas encore découpés en US.",
+      "estimate": null,
+      "targetDate": null
+    }
+  ],
+  "epics": [
+    { "id": "E1", "milestone": "M1", "title": "Tableau Kanban", "description": "Voir, créer, déplacer et modifier ses cartes à la main." },
+    { "id": "E2", "milestone": "M2", "title": "Créer une carte en parlant à l'assistant", "description": "Le cœur de la promesse : une phrase, quelques questions, une carte complète." },
+    { "id": "E3", "milestone": "M3", "title": "Déploiement web", "description": "Une démo en ligne, gratuite, toujours à jour." },
+    { "id": "E4", "milestone": "M3", "title": "Vitrine portfolio", "description": "Rendre le projet lisible en 1 minute pour un recruteur." },
+    { "id": "E5", "milestone": "M4", "title": "Brancher Claude", "description": "Une vraie compréhension du langage, avec des coûts maîtrisés." },
+    { "id": "E6", "milestone": "LATER", "title": "Champs enrichis", "description": "Priorité, projet, sous-tâches, estimation de durée, proposés par l'assistant." },
+    { "id": "E7", "milestone": "LATER", "title": "Dictée vocale", "description": "Parler au lieu de taper." },
+    { "id": "E8", "milestone": "LATER", "title": "« Ma journée »", "description": "L'assistant propose chaque matin 3 tâches à attaquer." },
+    { "id": "E9", "milestone": "LATER", "title": "Compte et synchronisation", "description": "Compte optionnel (Supabase) pour retrouver son tableau partout." },
+    { "id": "E10", "milestone": "LATER", "title": "App mobile", "description": "Expo, en réutilisant src/core/." },
+    { "id": "E11", "milestone": "LATER", "title": "Rappels", "description": "Notification avant l'échéance." }
+  ],
+  "stories": [
+    {
+      "id": "US-1.1", "epic": "E1", "title": "Voir mon tableau", "size": "M", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux voir mes tâches dans trois colonnes (À faire, En cours, Fait), afin de savoir d'un coup d'œil où j'en suis.",
+      "criteria": [
+        "Chaque carte affiche son titre et son échéance.",
+        "Au premier lancement, le tableau contient les tâches d'exemple (src/mocks/tasks.ts).",
+        "Sur mobile, les colonnes s'empilent ou défilent horizontalement, sans casser la page."
+      ]
+    },
+    {
+      "id": "US-1.2", "epic": "E1", "title": "Déplacer une carte", "size": "M", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux faire glisser une carte d'une colonne à l'autre, afin de suivre l'avancement.",
+      "criteria": [
+        "Glisser-déposer à la souris et au doigt.",
+        "Une alternative sans glisser existe (menu « Déplacer vers… »), pour l'accessibilité."
+      ]
+    },
+    {
+      "id": "US-1.3", "epic": "E1", "title": "Créer et modifier une carte", "size": "S", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux ouvrir une carte et changer son titre, sa description ou son échéance, afin de corriger ou préciser une tâche.",
+      "criteria": [
+        "L'enregistrement est refusé tant qu'un champ obligatoire est vide, avec un message clair.",
+        "La même fenêtre sert à créer une carte à la main (sans l'assistant)."
+      ]
+    },
+    {
+      "id": "US-1.4", "epic": "E1", "title": "Retrouver mon tableau", "size": "S", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux retrouver mes cartes quand je rouvre l'app, afin de ne rien perdre.",
+      "criteria": [
+        "Les cartes sont sauvegardées dans le navigateur (localStorage).",
+        "Le stockage passe par une interface TaskRepository, pour brancher Supabase plus tard sans toucher aux écrans."
+      ]
+    },
+    {
+      "id": "US-1.5", "epic": "E1", "title": "Supprimer une carte", "size": "S", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux supprimer une carte devenue inutile, afin de garder un tableau propre.",
+      "criteria": ["Une confirmation est demandée avant la suppression."]
+    },
+    {
+      "id": "US-1.6", "epic": "E1", "title": "Repérer les urgences", "size": "S", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux voir quelles cartes sont en retard ou dues aujourd'hui, afin de savoir quoi faire en priorité.",
+      "criteria": [
+        "Un badge « En retard » ou « Aujourd'hui » s'affiche sur les cartes non terminées concernées.",
+        "Dans chaque colonne, les cartes sont triées par échéance."
+      ]
+    },
+    {
+      "id": "US-2.1", "epic": "E2", "title": "Dire ma tâche en une phrase", "size": "M", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux écrire ma tâche comme elle me vient (« appeler le plombier avant vendredi »), afin de ne pas remplir de formulaire.",
+      "criteria": [
+        "Un champ de saisie unique, accessible depuis le tableau.",
+        "L'assistant remplit le brouillon avec ce qu'il a compris."
+      ]
+    },
+    {
+      "id": "US-2.2", "epic": "E2", "title": "Répondre aux questions de l'assistant", "size": "M", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux que l'assistant me demande ce qui manque, une question à la fois, afin que chaque carte soit complète.",
+      "criteria": [
+        "L'assistant pose une question par champ manquant (titre, description, échéance).",
+        "Une réponse invalide (ex. une date incompréhensible) entraîne une nouvelle question.",
+        "Je peux abandonner à tout moment, sans créer de carte."
+      ],
+      "note": "Socle déjà en place : findMissingFields (src/core/task.ts) et l'assistant mock, testés."
+    },
+    {
+      "id": "US-2.3", "epic": "E2", "title": "Valider la carte avant création", "size": "S", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux voir un aperçu de la carte et pouvoir la corriger, afin que l'assistant ne crée rien que je n'ai pas validé.",
+      "criteria": ["Un aperçu montre les trois champs ; « Créer » ajoute la carte dans « À faire »."]
+    },
+    {
+      "id": "US-2.4", "epic": "E2", "title": "Comprendre les dates en français", "size": "M", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux écrire « demain », « vendredi » ou « dans 2 semaines », afin de ne pas taper de date au format AAAA-MM-JJ.",
+      "criteria": [
+        "Les expressions courantes sont converties en date, en code (sans IA), et affichées pour validation.",
+        "Au moins 15 expressions couvertes par des tests."
+      ]
+    },
+    {
+      "id": "US-3.1", "epic": "E3", "title": "Démo publique", "size": "S", "status": "todo",
+      "story": "En tant que recruteur, je veux ouvrir la démo depuis un lien, afin de tester l'app sans rien installer.",
+      "criteria": [
+        "L'app est en ligne sur Vercel (offre gratuite), en mode mock.",
+        "Chaque push sur main met à jour la démo automatiquement."
+      ]
+    },
+    {
+      "id": "US-3.2", "epic": "E3", "title": "Données de démo", "size": "S", "status": "todo",
+      "story": "En tant que visiteur, je veux un tableau d'exemple et un bouton « Réinitialiser », afin de tester sans craindre de tout casser.",
+      "criteria": ["Chaque visiteur a son propre tableau (dans son navigateur)."]
+    },
+    {
+      "id": "US-4.1", "epic": "E4", "title": "README portfolio", "size": "M", "status": "todo",
+      "story": "En tant que recruteur, je veux comprendre le projet en 1 minute depuis GitHub, afin d'évaluer le travail de Thomas.",
+      "criteria": [
+        "README en anglais avec pitch, lien de démo, captures ou GIF, stack, lancement en local.",
+        "Un lien vers la vision produit et le cockpit."
+      ]
+    },
+    {
+      "id": "US-4.2", "epic": "E4", "title": "Cockpit public", "size": "S", "status": "todo",
+      "story": "En tant que recruteur, je veux voir la vision et le backlog du projet, afin de constater la démarche produit.",
+      "criteria": ["Le cockpit est accessible en ligne depuis le README."]
+    },
+    {
+      "id": "US-5.1", "epic": "E5", "title": "Comprendre le langage naturel", "size": "L", "status": "todo",
+      "story": "En tant qu'utilisateur, je veux que l'assistant comprenne vraiment ma phrase (titre, contexte, date), afin de répondre à moins de questions.",
+      "criteria": [
+        "LLM_PROVIDER=claude utilise l'API Claude côté serveur ; la clé n'est jamais envoyée au navigateur.",
+        "La réponse de Claude respecte le contrat AssistantTurn (sortie structurée)."
+      ],
+      "note": "⚠️ L'API Claude est payante à l'usage (quelques centimes par mois pour un usage perso avec un petit modèle)."
+    },
+    {
+      "id": "US-5.2", "epic": "E5", "title": "Maîtriser les coûts", "size": "S", "status": "todo",
+      "story": "En tant que porteur du projet, je veux limiter le nombre d'appels, afin de ne jamais avoir de mauvaise surprise sur la facture.",
+      "criteria": ["Un plafond d'appels par jour, et la démo publique reste en mock."]
+    },
+    {
+      "id": "US-5.3", "epic": "E5", "title": "Évaluer l'assistant", "size": "M", "status": "todo",
+      "story": "En tant que porteur du projet, je veux un jeu de 20 phrases avec le résultat attendu, afin de mesurer la qualité de l'assistant à chaque changement de prompt.",
+      "criteria": ["Un script affiche le taux de champs correctement extraits."]
+    }
+  ]
+}
