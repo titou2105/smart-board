@@ -1,0 +1,26 @@
+# Intégration continue : à chaque push, GitHub installe le projet et lance les vérifications communes
+# (types, lint, tests). Gratuit sur les dépôts privés dans la limite du forfait GitHub Actions.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Un nouveau push annule la vérification précédente de la même branche (économise des minutes).
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run check

@@ -14,6 +14,7 @@ l'assistant pose les questions qui manquent (titre, description, échéance) et 
 - Mobile plus tard : Expo, en réutilisant `src/core/`
 
 ## Commandes
+- Tout vérifier : `npm run check` (types + lint + tests ; lancé aussi par la CI GitHub à chaque push)
 - Lancer en local : `npm run dev` (http://localhost:3000)
 - Cockpit produit : skill `/cockpit` du harnais. Régénérer : `node ~/projets/harnais/global/skills/cockpit/build.mjs`,
   puis ouvrir `docs/cockpit/index.html` (double-clic).
