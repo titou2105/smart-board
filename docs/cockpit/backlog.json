@@ -194,7 +194,7 @@
       "epic": "E1",
       "title": "Voir mes tâches par échéance",
       "size": "M",
-      "status": "todo",
+      "status": "in_progress",
       "story": "En tant qu'utilisateur, je veux voir mes tâches regroupées par urgence (En retard, Aujourd'hui, Cette semaine, Plus tard), afin de savoir quoi faire en premier.",
       "criteria": [
         "L'app lit data/tasks.json en local, et les données fictives en mode démo, via TaskRepository.",
