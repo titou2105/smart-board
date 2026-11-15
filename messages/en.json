@@ -1,0 +1,11 @@
+{
+  "Metadata": {
+    "title": "Smart Board",
+    "description": "Say it, it's sorted. A to-do list where the assistant asks what's missing."
+  },
+  "Home": {
+    "tagline": "Say it, it's sorted.",
+    "intro": "Tell the assistant what you need to do: it asks what's missing and files a complete task.",
+    "comingSoon": "Your tasks will show up here soon, grouped by due date."
+  }
+}

@@ -29,7 +29,9 @@ l'assistant pose les questions qui manquent (titre, description, échéance) et 
 - `src/lib/assistant/` — implémentations de l'assistant (`mock`, plus tard `claude`) ; `getTaskAssistant()`
   choisit selon `LLM_PROVIDER`. Côté serveur uniquement.
 - `src/mocks/` — données fictives réalistes (`tasks.ts` : tableau d'exemple).
-- `src/app/` — pages et routes ; `src/components/ui/` — composants shadcn.
+- `src/app/[locale]/` — pages et routes (la langue n'apparaît pas dans l'URL) ; `src/components/ui/` — composants shadcn.
+- `src/i18n/` + `src/proxy.ts` — langues (en, fr), détection de la langue du navigateur ; `messages/` — textes de
+  l'interface. **Aucun texte en dur dans les écrans** : tout passe par `messages/en.json` et `messages/fr.json`.
 - `docs/product.md` — la vision (texte). `docs/cockpit/backlog.json` — jalons, EPIC, US, décisions, risques
   (source de vérité). `docs/cockpit/index.html` — cockpit généré, ne pas modifier à la main.
 
@@ -65,6 +67,14 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
   Prochaine étape : Thomas teste `/tache` dans une nouvelle session (test d'acceptation), puis US-1.2 → fait ;
   ensuite US-1.4 (i18n) et US-1.5 (vue liste).
   Blocages : aucun.
+- 2026-11-15 — US-1.4 faite sur la branche `us-1.4-interface-bilingue` : next-intl, routes `[locale]` invisibles,
+  proxy de détection de langue, dictionnaires `messages/en.json` / `fr.json` (test des clés), page d'accueil Smart Board
+  bilingue. Vérifié : FR → français, EN et autres → anglais, URL `/` inchangée, build statique `/en` et `/fr`.
+  Corrigé au passage : police Geist (auto-référence `--font-sans` laissée par shadcn) et paquet `@tailwindcss/turbopack`
+  mal installé (réinstallé).
+  Prochaine étape : fusionner la branche dans `main` (pas de dépôt distant, donc pas de PR) ; test de `/tache` par Thomas
+  (US-1.2) ; puis US-1.5 (vue liste par échéance).
+  Blocages : pas de dépôt GitHub, donc le cycle branche + PR du harnais ne peut pas aller jusqu'à la PR.
 
 ## Décisions
 <!-- Claude ajoute ici les choix importants : date — décision — pourquoi -->
@@ -104,6 +114,9 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
   dates et valide ; rien n'est ajouté si une tâche est incomplète). Pourquoi : pas d'écriture JSON à la main, fiable.
 - 2026-11-15 — Deux listes de tâches assumées pour l'instant : `/tache` ne vaut que dans smart-board, le carnet du
   portefeuille garde ses tâches transverses (D18). À revoir quand Smart Board aura fait ses preuves.
+
+- 2026-11-15 — i18n : next-intl, routes `[locale]` invisibles (`localePrefix: "never"`), langue du navigateur via
+  `src/proxy.ts`, anglais par défaut (D19). Pourquoi : adresses inchangées et pages statiques, compatibles Cache Components.
 
 ## Feuille de route
 - Détail : `docs/product.md` et le cockpit (`docs/cockpit/index.html`).

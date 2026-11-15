@@ -1,0 +1,11 @@
+{
+  "Metadata": {
+    "title": "Smart Board",
+    "description": "Dis-le, c'est rangé. Une to-do où l'assistant te pose les questions qui manquent."
+  },
+  "Home": {
+    "tagline": "Dis-le, c'est rangé.",
+    "intro": "Dis à l'assistant ce que tu dois faire : il te demande ce qui manque et range une tâche complète.",
+    "comingSoon": "Tes tâches s'afficheront bientôt ici, regroupées par échéance."
+  }
+}

@@ -181,12 +181,13 @@
       "epic": "E1",
       "title": "Interface bilingue EN/FR",
       "size": "S",
-      "status": "todo",
+      "status": "done",
       "story": "En tant qu'utilisateur, je veux l'app dans ma langue, afin de la comprendre sans effort.",
       "criteria": [
         "La langue suit celle du navigateur, avec l'anglais par défaut ; tous les textes passent par des fichiers en / fr."
       ],
-      "note": "À faire avant US-1.5, pour que chaque écran soit bilingue dès sa livraison (voir DoD)."
+      "note": "À faire avant US-1.5, pour que chaque écran soit bilingue dès sa livraison (voir DoD).",
+      "doneAt": "2026-11-15"
     },
     {
       "id": "US-1.5",
@@ -614,6 +615,16 @@
       "decision": "Deux listes assumées pour l'instant : /tache ne marche que dans le projet smart-board, le carnet garde ses tâches transverses. À revoir quand Smart Board aura fait ses preuves.",
       "related": [
         "US-1.2"
+      ]
+    },
+    {
+      "id": "D19",
+      "status": "decided",
+      "date": "2026-11-15",
+      "question": "Comment rendre l'interface bilingue sans changer les adresses ?",
+      "decision": "next-intl 4.15 avec des routes [locale] invisibles (localePrefix never) : le proxy Next 16 lit la langue du navigateur et réécrit / vers /en ou /fr en interne. Pages pré-générées par langue, compatibles Cache Components. Anglais par défaut. Dictionnaires dans messages/en.json et fr.json, un test vérifie qu'ils ont les mêmes clés.",
+      "related": [
+        "US-1.4"
       ]
     }
   ],
