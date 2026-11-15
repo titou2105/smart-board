@@ -21,6 +21,7 @@ l'assistant pose les questions qui manquent (titre, description, échéance) et 
 - Tests : `npm test` · Types : `npm run typecheck` · Linter : `npm run lint` · Build : `npm run build`
 - Ajouter un composant shadcn : `npx shadcn@latest add <composant>`
 - Vérifier le fichier de tâches : `npm run tasks:check` (à lancer après chaque écriture dans `data/tasks.json`)
+- Ajouter des tâches : skill `/tache` (`.claude/skills/tache/`), qui appelle `npm run --silent tasks:add` (JSON sur l'entrée standard)
 
 ## Structure
 - `src/core/` — logique métier **pure** (aucun import React/Next) : type `Task`, champs obligatoires,
@@ -59,6 +60,11 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
   bien ; repérer les dépendances (ETA ↔ passeport) apporte de la valeur.
   Prochaine étape : US-1.2 (commande `/tache`), puis US-1.4 (i18n) et US-1.5 (vue liste).
   Blocages : aucun.
+- 2026-11-15 — US-1.2 en cours : skill `/tache` rédigé, `addTasks` dans `src/core/` (15 tests) et script `tasks:add`
+  (testé sur un fichier temporaire). 4 tâches réelles dans `data/tasks.json`.
+  Prochaine étape : Thomas teste `/tache` dans une nouvelle session (test d'acceptation), puis US-1.2 → fait ;
+  ensuite US-1.4 (i18n) et US-1.5 (vue liste).
+  Blocages : aucun.
 
 ## Décisions
 <!-- Claude ajoute ici les choix importants : date — décision — pourquoi -->
@@ -93,6 +99,11 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
   classe spontanément ses tâches ainsi ; optionnel, il ne casse rien.
 - 2026-11-14 — Fichier de tâches : `{ schemaVersion: 1, tasks: [...] }` ; les champs inconnus sont conservés à la
   validation. Pourquoi : ajouter des champs plus tard sans migration.
+
+- 2026-11-15 — `/tache` : Claude fait la conversation, le code fait le mécanique (`addTasks` génère id, statut,
+  dates et valide ; rien n'est ajouté si une tâche est incomplète). Pourquoi : pas d'écriture JSON à la main, fiable.
+- 2026-11-15 — Deux listes de tâches assumées pour l'instant : `/tache` ne vaut que dans smart-board, le carnet du
+  portefeuille garde ses tâches transverses (D18). À revoir quand Smart Board aura fait ses preuves.
 
 ## Feuille de route
 - Détail : `docs/product.md` et le cockpit (`docs/cockpit/index.html`).

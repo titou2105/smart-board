@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { validateTaskFile } from "./task-file";
+import { addTasks, emptyTaskFile, validateTaskFile } from "./task-file";
 
 const validTask = {
   id: "t1",
@@ -45,5 +45,48 @@ describe("validateTaskFile", () => {
   it("rejects duplicate ids", () => {
     const result = validateTaskFile({ schemaVersion: 1, tasks: [validTask, validTask] });
     expect(result.ok).toBe(false);
+  });
+});
+
+describe("addTasks", () => {
+  const now = new Date("2026-11-15T10:30:00.000Z");
+  const input = { title: " Appeler le plombier ", description: "Fuite sous l'évier.", dueDate: "2026-11-20", category: "perso" };
+
+  it("fills id, status, source and timestamps", () => {
+    const result = addTasks(emptyTaskFile(), [input], now);
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.added[0]).toEqual({
+      id: "t-20261115-1",
+      title: "Appeler le plombier",
+      description: "Fuite sous l'évier.",
+      dueDate: "2026-11-20",
+      status: "todo",
+      source: "claude-code",
+      category: "perso",
+      createdAt: "2026-11-15T10:30:00.000Z",
+      updatedAt: "2026-11-15T10:30:00.000Z",
+    });
+  });
+
+  it("never reuses an existing id and keeps existing tasks", () => {
+    const first = addTasks(emptyTaskFile(), [input], now);
+    if (!first.ok) throw new Error("setup");
+    const second = addTasks(first.file, [input, { ...input, title: "Autre" }], now);
+    expect(second.ok).toBe(true);
+    if (!second.ok) return;
+    expect(second.file.tasks.map((task) => task.id)).toEqual(["t-20261115-1", "t-20261115-2", "t-20261115-3"]);
+  });
+
+  it("adds nothing when one task is incomplete", () => {
+    const result = addTasks(emptyTaskFile(), [input, { ...input, dueDate: "vendredi" }], now);
+    expect(result.ok).toBe(false);
+    if (!result.ok) expect(result.errors[0]).toContain("n°2");
+  });
+
+  it("does not mutate the original file", () => {
+    const file = emptyTaskFile();
+    addTasks(file, [input], now);
+    expect(file.tasks).toHaveLength(0);
   });
 });

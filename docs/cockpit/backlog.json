@@ -3,7 +3,7 @@
   "project": {
     "name": "Smart Board",
     "tagline": "« Dis-le, c'est rangé. » Une to-do où l'assistant te pose les questions qui manquent.",
-    "updatedAt": "2026-11-14"
+    "updatedAt": "2026-11-15"
   },
   "milestones": [
     {
@@ -155,13 +155,14 @@
       "epic": "E1",
       "title": "Dicter une tâche avec /tache",
       "size": "M",
-      "status": "todo",
+      "status": "in_progress",
       "story": "En tant qu'utilisateur, je veux écrire /tache appeler le plombier avant vendredi dans Claude Code, afin d'enregistrer une tâche complète sans formulaire.",
       "criteria": [
         "Claude pose une question par champ manquant (titre, description, échéance), une à la fois.",
         "Les dates relatives (« vendredi », « dans 2 semaines ») sont converties et affichées en clair pour validation.",
         "Claude montre la tâche finale et n'écrit dans data/tasks.json qu'après ma validation."
-      ]
+      ],
+      "note": "Skill .claude/skills/tache + script npm run tasks:add en place (2026-11-15). Reste : test d'acceptation par Thomas dans une nouvelle session."
     },
     {
       "id": "US-1.3",
@@ -603,6 +604,16 @@
       "related": [
         "US-3.1",
         "US-4.4"
+      ]
+    },
+    {
+      "id": "D18",
+      "status": "decided",
+      "date": "2026-11-15",
+      "question": "Une seule to-do ou deux (Smart Board et carnet/taches.md du portefeuille) ?",
+      "decision": "Deux listes assumées pour l'instant : /tache ne marche que dans le projet smart-board, le carnet garde ses tâches transverses. À revoir quand Smart Board aura fait ses preuves.",
+      "related": [
+        "US-1.2"
       ]
     }
   ],

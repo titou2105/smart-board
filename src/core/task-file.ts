@@ -2,7 +2,15 @@
  * Format of data/tasks.json, shared by Claude Code (/tache) and the app.
  * Pure TypeScript (no Node or React import), so it also runs on mobile.
  */
-import { REQUIRED_FIELDS, TASK_SOURCES, TASK_STATUSES, isIsoDate, type Task } from "./task";
+import {
+  REQUIRED_FIELDS,
+  TASK_SOURCES,
+  TASK_STATUSES,
+  findMissingFields,
+  isIsoDate,
+  type Task,
+  type TaskSource,
+} from "./task";
 
 /** Bump this number when the format changes in a way old files must be migrated. */
 export const CURRENT_SCHEMA_VERSION = 1;
@@ -71,4 +79,64 @@ export function validateTaskFile(data: unknown): TaskFileResult {
   const seenIds = new Set<string>();
   const errors = data.tasks.flatMap((task, index) => validateTask(task, index, seenIds));
   return errors.length > 0 ? { ok: false, errors } : { ok: true, file: data as unknown as TaskFile };
+}
+
+export function emptyTaskFile(): TaskFile {
+  return { schemaVersion: CURRENT_SCHEMA_VERSION, tasks: [] };
+}
+
+/** What Claude Code (or a form) provides: the mechanical fields are filled by addTasks. */
+export interface NewTaskInput {
+  title: string;
+  description: string;
+  dueDate: string;
+  category?: string;
+  source?: TaskSource;
+}
+
+export type AddTasksResult = { ok: true; file: TaskFile; added: Task[] } | { ok: false; errors: string[] };
+
+/** Ids look like t-20261115-1: the creation day plus a counter, readable and unique. */
+function nextId(existingIds: Set<string>, day: string): string {
+  const prefix = `t-${day.replaceAll("-", "")}-`;
+  let counter = 1;
+  while (existingIds.has(prefix + counter)) counter++;
+  return prefix + counter;
+}
+
+/**
+ * Adds new tasks to a file, without mutating it.
+ * The code handles the mechanical part (id, status, timestamps); the caller only
+ * brings what the user said. Nothing is added if a single task is incomplete.
+ */
+export function addTasks(file: TaskFile, inputs: NewTaskInput[], now: Date): AddTasksResult {
+  const errors = inputs.flatMap((input, index) =>
+    findMissingFields(input).map((field) => `nouvelle tâche n°${index + 1} : « ${field} » manquant ou invalide.`),
+  );
+  if (errors.length > 0) return { ok: false, errors };
+
+  const timestamp = now.toISOString();
+  const day = timestamp.slice(0, 10);
+  const existingIds = new Set(file.tasks.map((task) => task.id));
+
+  const added: Task[] = inputs.map((input) => {
+    const id = nextId(existingIds, day);
+    existingIds.add(id);
+    const task: Task = {
+      id,
+      title: input.title.trim(),
+      description: input.description.trim(),
+      dueDate: input.dueDate.trim(),
+      status: "todo",
+      source: input.source ?? "claude-code",
+      createdAt: timestamp,
+      updatedAt: timestamp,
+    };
+    if (input.category?.trim()) task.category = input.category.trim();
+    return task;
+  });
+
+  // Final safety net: the whole file must still be valid after the addition.
+  const result = validateTaskFile({ ...file, tasks: [...file.tasks, ...added] });
+  return result.ok ? { ok: true, file: result.file, added } : result;
 }
