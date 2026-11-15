@@ -5,7 +5,17 @@
   },
   "Home": {
     "tagline": "Say it, it's sorted.",
-    "intro": "Tell the assistant what you need to do: it asks what's missing and files a complete task.",
-    "comingSoon": "Your tasks will show up here soon, grouped by due date."
+    "loading": "Loading your tasks…"
+  },
+  "Tasks": {
+    "groups": {
+      "overdue": "Overdue",
+      "today": "Today",
+      "next7Days": "Next 7 days",
+      "later": "Later"
+    },
+    "done": "{count, plural, one {# task done} other {# tasks done}}",
+    "empty": "No task yet. Add one with /tache in Claude Code.",
+    "error": "Your tasks couldn't be loaded."
   }
 }

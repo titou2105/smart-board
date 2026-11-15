@@ -5,7 +5,17 @@
   },
   "Home": {
     "tagline": "Dis-le, c'est rangé.",
-    "intro": "Dis à l'assistant ce que tu dois faire : il te demande ce qui manque et range une tâche complète.",
-    "comingSoon": "Tes tâches s'afficheront bientôt ici, regroupées par échéance."
+    "loading": "Chargement de tes tâches…"
+  },
+  "Tasks": {
+    "groups": {
+      "overdue": "En retard",
+      "today": "Aujourd'hui",
+      "next7Days": "Dans les 7 jours",
+      "later": "Plus tard"
+    },
+    "done": "{count, plural, one {# tâche faite} other {# tâches faites}}",
+    "empty": "Aucune tâche pour l'instant. Ajoutes-en une avec /tache dans Claude Code.",
+    "error": "Impossible de charger tes tâches."
   }
 }

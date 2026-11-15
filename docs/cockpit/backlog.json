@@ -194,13 +194,14 @@
       "epic": "E1",
       "title": "Voir mes tâches par échéance",
       "size": "M",
-      "status": "in_progress",
+      "status": "done",
       "story": "En tant qu'utilisateur, je veux voir mes tâches regroupées par urgence (En retard, Aujourd'hui, Cette semaine, Plus tard), afin de savoir quoi faire en premier.",
       "criteria": [
         "L'app lit data/tasks.json en local, et les données fictives en mode démo, via TaskRepository.",
         "Les tâches terminées sont repliées en bas."
       ],
-      "note": "Vue provisoire, à revoir lors de l'atelier UI (US-2.1)."
+      "note": "Vue provisoire, à revoir lors de l'atelier UI (US-2.1). Les détails techniques d'un fichier invalide ne sont qu'en français (messages de validation de src/core).",
+      "doneAt": "2026-11-15"
     },
     {
       "id": "US-2.1",
@@ -625,6 +626,27 @@
       "decision": "next-intl 4.15 avec des routes [locale] invisibles (localePrefix never) : le proxy Next 16 lit la langue du navigateur et réécrit / vers /en ou /fr en interne. Pages pré-générées par langue, compatibles Cache Components. Anglais par défaut. Dictionnaires dans messages/en.json et fr.json, un test vérifie qu'ils ont les mêmes clés.",
       "related": [
         "US-1.4"
+      ]
+    },
+    {
+      "id": "D20",
+      "status": "decided",
+      "date": "2026-11-15",
+      "question": "Que veut dire « Cette semaine » dans la vue par échéance ?",
+      "decision": "Les 7 prochains jours (« Dans les 7 jours » / « Next 7 days »), pour que le groupe ait un sens même le dimanche. « Aujourd'hui » est calculé à l'heure de Paris.",
+      "related": [
+        "US-1.5"
+      ]
+    },
+    {
+      "id": "D21",
+      "status": "decided",
+      "date": "2026-11-15",
+      "question": "D'où l'app lit-elle les tâches ?",
+      "decision": "Interface TaskRepository ; DATA_PROVIDER=mock (défaut, données fictives) ou file (data/tasks.json). Thomas met DATA_PROVIDER=file dans son .env.local.",
+      "related": [
+        "US-1.5",
+        "US-5.1"
       ]
     }
   ],

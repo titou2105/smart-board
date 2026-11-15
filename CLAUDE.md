@@ -26,6 +26,8 @@ l'assistant pose les questions qui manquent (titre, description, échéance) et 
 ## Structure
 - `src/core/` — logique métier **pure** (aucun import React/Next) : type `Task`, champs obligatoires,
   `findMissingFields`, interface `TaskAssistant`. Réutilisable telle quelle par la future app mobile.
+- `src/lib/tasks/` — implémentations de `TaskRepository` (`file`, `mock`) ; `getTaskRepository()` choisit selon
+  `DATA_PROVIDER`. `src/components/task-list.tsx` — vue par échéance (provisoire).
 - `src/lib/assistant/` — implémentations de l'assistant (`mock`, plus tard `claude`) ; `getTaskAssistant()`
   choisit selon `LLM_PROVIDER`. Côté serveur uniquement.
 - `src/mocks/` — données fictives réalistes (`tasks.ts` : tableau d'exemple).
@@ -37,6 +39,7 @@ l'assistant pose les questions qui manquent (titre, description, échéance) et 
 
 ## Variables d'environnement
 Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
+`DATA_PROVIDER=mock|file` : `mock` (défaut) affiche les tâches fictives, `file` les vraies tâches de `data/tasks.json`.
 `ANTHROPIC_API_KEY` reste côté serveur : jamais de préfixe `NEXT_PUBLIC_`.
 
 ## Conventions du projet
@@ -75,6 +78,14 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
   Prochaine étape : fusionner la branche dans `main` (pas de dépôt distant, donc pas de PR) ; test de `/tache` par Thomas
   (US-1.2) ; puis US-1.5 (vue liste par échéance).
   Blocages : pas de dépôt GitHub, donc le cycle branche + PR du harnais ne peut pas aller jusqu'à la PR.
+- 2026-11-15 — US-1.5 faite sur la branche `us-1.5-vue-par-echeance` : regroupement En retard / Aujourd'hui /
+  Dans les 7 jours / Plus tard (`src/core/due-groups.ts`, heure de Paris), `TaskRepository` fichier/mock
+  (`DATA_PROVIDER`), écran liste bilingue, tâches faites repliées, message clair si le fichier est invalide.
+  Vérifié en vrai : 4 vraies tâches, mode mock, FR/EN, mobile, fichier invalide ; 26 tests, build OK.
+  M1 : il ne reste que la validation de `/tache` par Thomas (US-1.2).
+  Prochaine étape : fusionner la branche ; Thomas crée son `.env.local` (`DATA_PROVIDER=file`) et teste `/tache` ;
+  puis M2 (atelier UI US-2.1, création du dépôt GitHub).
+  Blocages : `.env.local` protégé par le harnais (Thomas le crée lui-même).
 
 ## Décisions
 <!-- Claude ajoute ici les choix importants : date — décision — pourquoi -->
@@ -117,6 +128,9 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
 
 - 2026-11-15 — i18n : next-intl, routes `[locale]` invisibles (`localePrefix: "never"`), langue du navigateur via
   `src/proxy.ts`, anglais par défaut (D19). Pourquoi : adresses inchangées et pages statiques, compatibles Cache Components.
+
+- 2026-11-15 — « Cette semaine » = les 7 prochains jours (D20) ; tâches lues via `TaskRepository`, `DATA_PROVIDER`
+  mock par défaut (D21). La liste est rendue à chaque requête (`connection()` + `Suspense`, Cache Components).
 
 ## Feuille de route
 - Détail : `docs/product.md` et le cockpit (`docs/cockpit/index.html`).
