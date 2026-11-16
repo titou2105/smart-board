@@ -128,6 +128,12 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
   À savoir : si le serveur de dev sert un vieux style (serif, bouton noir), vider `.next` ; un onglet du panneau
   navigateur masqué reste sur « Chargement… » (rendu différé en pause), ce n'est pas un bug.
   Prochaine étape : US-2.2 (ajouter une tâche à la main) ou US-2.3 (détail / modifier), puis démo Vercel.
+- 2026-11-16 — US-2.3 découpée (correction → nouvelle US-2.6) puis faite (branche `us-2.3-detail-tache`) : détail
+  d'une tâche dans un `<dialog>` natif (`src/components/task-detail-dialog.tsx`), feuille montante sur téléphone,
+  panneau à droite sur ordinateur, tâche ouverte dans l'adresse (`?task=`, filtre conservé, Échap / Retour ferment) ;
+  actions Marquer comme faite / Rouvrir, Commencer, Demain (`src/app/[locale]/actions.ts`).
+  Vérifié sur une copie temporaire : 375 px et large, clair et sombre, FR/EN, chaque action écrit dans le fichier.
+  Prochaine étape : US-2.6 (corriger une tâche) ou US-2.2 (ajouter une tâche), puis démo Vercel (US-3.x).
   Blocages : Thomas doit recréer `.env.local` dans le projet (le premier a été créé dans `C:\Users\tthiv`).
 
 ## Décisions

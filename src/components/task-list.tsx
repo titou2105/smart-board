@@ -2,6 +2,7 @@ import Link from "next/link";
 import { connection } from "next/server";
 import { getFormatter, getTranslations } from "next-intl/server";
 import { CheckButton } from "@/components/check-button";
+import { TaskDetailDialog, type TaskDetailLabels, type TaskDetailView } from "@/components/task-detail-dialog";
 import { addDays, APP_TIME_ZONE, DUE_GROUPS, groupByDueDate, todayIn, type DueGroup } from "@/core/due-groups";
 import type { Task } from "@/core/task";
 import { TaskSourceError } from "@/core/task-repository";
@@ -57,7 +58,7 @@ function CategoryFilters({ active, t }: { active: CategoryFilter; t: T }) {
       {CATEGORY_FILTERS.map((filter) => (
         <Link
           key={filter}
-          href={filter === "all" ? "?" : `?filter=${filter}`}
+          href={listHref(filter)}
           aria-current={filter === active ? "page" : undefined}
           scroll={false}
           className={cn(
@@ -72,7 +73,20 @@ function CategoryFilters({ active, t }: { active: CategoryFilter; t: T }) {
   );
 }
 
-async function TaskRow({ task, today, showDate, t }: { task: Task; today: string; showDate: boolean; t: T }) {
+function categoryLabel(task: Task, t: T): string | null {
+  if (!task.category) return null;
+  return KNOWN_CATEGORIES.includes(task.category) ? t(`filters.${task.category as "perso" | "pro"}`) : task.category;
+}
+
+/** Link to the current list with other query params: keeps the filter when opening or closing a task. */
+function listHref(filter: CategoryFilter, taskId?: string) {
+  const query: Record<string, string> = {};
+  if (filter !== "all") query.filter = filter;
+  if (taskId) query.task = taskId;
+  return { pathname: "/", query };
+}
+
+async function TaskRow({ task, today, showDate, openHref, t }: { task: Task; today: string; showDate: boolean; openHref: ReturnType<typeof listHref>; t: T }) {
   const format = await getFormatter();
   const done = task.status === "done";
   const overdue = !done && task.dueDate < today;
@@ -85,11 +99,7 @@ async function TaskRow({ task, today, showDate, t }: { task: Task; today: string
   });
   const relative =
     task.dueDate === today ? t("today") : task.dueDate === addDays(today, 1) ? t("tomorrow") : shortDate;
-  const category = task.category
-    ? KNOWN_CATEGORIES.includes(task.category)
-      ? t(`filters.${task.category as "perso" | "pro"}`)
-      : task.category
-    : null;
+  const category = categoryLabel(task, t);
 
   return (
     <li className="flex items-start gap-1 py-1 pr-3 pl-1">
@@ -98,7 +108,13 @@ async function TaskRow({ task, today, showDate, t }: { task: Task; today: string
         done={done}
         label={done ? t("reopen", { title: task.title }) : t("markDone", { title: task.title })}
       />
-      <div className="min-w-0 flex-1 py-2">
+      {/* The whole text area opens the task detail (US-2.3). */}
+      <Link
+        href={openHref}
+        scroll={false}
+        aria-label={t("open", { title: task.title })}
+        className="min-w-0 flex-1 rounded-md py-2 focus-visible:outline-2 focus-visible:outline-ring"
+      >
         <p className={cn("font-medium", done && "text-muted-foreground line-through")}>{task.title}</p>
         <p className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
           {overdue ? (
@@ -113,7 +129,7 @@ async function TaskRow({ task, today, showDate, t }: { task: Task; today: string
           )}
           {category && <span className="rounded-sm bg-secondary px-1.5 text-xs">{category}</span>}
         </p>
-      </div>
+      </Link>
     </li>
   );
 }
@@ -130,7 +146,9 @@ export async function TaskList({ searchParams }: { searchParams: Promise<Record<
   // The list depends on the file, the URL filter and today's date: render it at request time.
   await connection();
   const t = await getTranslations("Tasks");
-  const filter = parseCategoryFilter((await searchParams).filter);
+  const params = await searchParams;
+  const filter = parseCategoryFilter(params.filter);
+  const openTaskId = typeof params.task === "string" ? params.task : undefined;
 
   let allTasks: Task[];
   try {
@@ -158,6 +176,8 @@ export async function TaskList({ searchParams }: { searchParams: Promise<Record<
   const tasks = filterByCategory(allTasks, filter);
   const groups = groupByDueDate(tasks, today);
   const openGroups = DUE_GROUPS.filter((group) => groups[group].length > 0);
+  // The detail looks in all tasks, so a link stays valid even if the task is hidden by the filter.
+  const openTask = openTaskId ? allTasks.find((task) => task.id === openTaskId) : undefined;
 
   return (
     <div className="flex flex-col gap-6">
@@ -175,7 +195,7 @@ export async function TaskList({ searchParams }: { searchParams: Promise<Record<
           </h2>
           <ul className="divide-y overflow-hidden rounded-lg border bg-card shadow-card">
             {groups[group].map((task) => (
-              <TaskRow key={task.id} task={task} today={today} showDate={group !== "today"} t={t} />
+              <TaskRow key={task.id} task={task} today={today} showDate={group !== "today"} openHref={listHref(filter, task.id)} t={t} />
             ))}
           </ul>
         </section>
@@ -188,11 +208,48 @@ export async function TaskList({ searchParams }: { searchParams: Promise<Record<
           </summary>
           <ul className="mt-2 divide-y overflow-hidden rounded-lg border bg-card">
             {groups.done.map((task) => (
-              <TaskRow key={task.id} task={task} today={today} showDate t={t} />
+              <TaskRow key={task.id} task={task} today={today} showDate openHref={listHref(filter, task.id)} t={t} />
             ))}
           </ul>
         </details>
       )}
+
+      {openTask && <TaskDetail task={openTask} today={today} closeHref={listHref(filter)} />}
     </div>
   );
 }
+
+/** Formats and translates the open task on the server, then hands it to the dialog (client). */
+async function TaskDetail({ task, today, closeHref }: { task: Task; today: string; closeHref: ReturnType<typeof listHref> }) {
+  const t = await getTranslations("Tasks");
+  const d = await getTranslations("Detail");
+  const format = await getFormatter();
+  const view: TaskDetailView = {
+    id: task.id,
+    title: task.title,
+    description: task.description,
+    status: task.status,
+    dueLong: format.dateTime(new Date(task.dueDate + "T00:00:00Z"), { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" }),
+    overdue: task.status !== "done" && task.dueDate < today,
+    statusLabel: d(`statuses.${task.status}`),
+    originLabel: d(`origins.${ORIGIN_KEY[task.source]}`),
+    categoryLabel: categoryLabel(task, t),
+  };
+  const labels: TaskDetailLabels = {
+    close: d("close"),
+    description: d("description"),
+    dueDate: d("dueDate"),
+    status: d("status"),
+    origin: d("origin"),
+    overdue: d("overdue"),
+    markDone: d("markDone"),
+    reopen: d("reopen"),
+    start: d("start"),
+    tomorrow: d("tomorrow"),
+  };
+  // A URL object is not serializable for a client component: pass the query string.
+  const query = new URLSearchParams(closeHref.query).toString();
+  return <TaskDetailDialog task={view} closeHref={query ? `/?${query}` : "/"} labels={labels} />;
+}
+
+const ORIGIN_KEY = { "claude-code": "assistant", manual: "manual", mail: "mail" } as const;

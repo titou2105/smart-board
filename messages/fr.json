@@ -35,6 +35,29 @@
     "done": "{count, plural, one {# tâche faite} other {# tâches faites}}",
     "empty": "Aucune tâche pour l'instant. Ajoutes-en une avec /tache dans Claude Code.",
     "emptyFilter": "Rien à faire ici pour ce filtre.",
-    "error": "Impossible de charger tes tâches."
+    "error": "Impossible de charger tes tâches.",
+    "open": "Ouvrir « {title} »"
+  },
+  "Detail": {
+    "close": "Fermer",
+    "description": "Description",
+    "dueDate": "Échéance",
+    "status": "Statut",
+    "origin": "Ajoutée",
+    "overdue": "en retard",
+    "markDone": "Marquer comme faite",
+    "reopen": "Rouvrir",
+    "start": "Commencer",
+    "tomorrow": "Demain",
+    "statuses": {
+      "todo": "À faire",
+      "in_progress": "En cours",
+      "done": "Faite"
+    },
+    "origins": {
+      "assistant": "Avec l'assistant (Claude Code)",
+      "manual": "À la main",
+      "mail": "Depuis un mail"
+    }
   }
 }
