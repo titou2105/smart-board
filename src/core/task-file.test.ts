@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addTasks, emptyTaskFile, validateTaskFile } from "./task-file";
+import { addTasks, emptyTaskFile, updateTask, validateTaskFile, type TaskFile } from "./task-file";
 
 const validTask = {
   id: "t1",
@@ -88,5 +88,35 @@ describe("addTasks", () => {
     const file = emptyTaskFile();
     addTasks(file, [input], now);
     expect(file.tasks).toHaveLength(0);
+  });
+});
+
+describe("updateTask", () => {
+  const now = new Date("2026-11-16T12:00:00.000Z");
+  const file = { schemaVersion: 1, tasks: [validTask] } as TaskFile;
+
+  it("changes the status and the update date only", () => {
+    const result = updateTask(file, "t1", { status: "done" }, now);
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.after).toEqual({ ...validTask, status: "done", updatedAt: "2026-11-16T12:00:00.000Z" });
+    expect(result.before.status).toBe("todo");
+  });
+
+  it("moves a due date", () => {
+    const result = updateTask(file, "t1", { dueDate: "2026-11-20" }, now);
+    expect(result.ok && result.file.tasks[0].dueDate).toBe("2026-11-20");
+  });
+
+  it("changes nothing when the change is invalid", () => {
+    const result = updateTask(file, "t1", { dueDate: "lundi" }, now);
+    expect(result.ok).toBe(false);
+    expect(file.tasks[0].dueDate).toBe("2026-12-15");
+  });
+
+  it("rejects an unknown id", () => {
+    const result = updateTask(file, "nope", { status: "done" }, now);
+    expect(result.ok).toBe(false);
+    if (!result.ok) expect(result.errors[0]).toContain("nope");
   });
 });

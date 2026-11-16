@@ -117,6 +117,10 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
   critère 1 réécrit (questions regroupées en un message).
   M1 : il reste l'US-1.3 (mettre à jour une tâche avec `/tache`, S) pour le 30 novembre.
   Prochaine étape : US-1.3 ou US-2.5, au choix de Thomas.
+- 2026-11-16 — US-1.3 faite (branche `us-1.3-mettre-a-jour-tache`) : `updateTask` + `npm run tasks:update` + section
+  « Mettre à jour » de `/tache`. Test d'acceptation OK (passeport décalé, Engie en cours, « Londres » ambigu → question).
+  **M1 « Capture via Claude Code » bouclé (5/5 US), avec 2 semaines d'avance sur le 30 novembre.**
+  Prochaine étape : M2 — US-2.5 (nouvelle liste, direction A), puis US-2.2 / US-2.3, démo Vercel (US-3.x).
   Blocages : Thomas doit recréer `.env.local` dans le projet (le premier a été créé dans `C:\Users\tthiv`).
 
 ## Décisions

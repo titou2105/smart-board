@@ -1,15 +1,19 @@
 ---
 name: tache
-description: Capture une ou plusieurs tâches de Thomas dans Smart Board (data/tasks.json) — reformule, pose les questions qui manquent (description, échéance), convertit les dates, montre un aperçu et n'écrit qu'après validation. À utiliser dans le projet smart-board quand Thomas tape « /tache … », « ajoute une tâche », « nouvelle tâche », « ajoute dans la to-do », ou donne une liste de choses à faire.
+description: Capture et met à jour les tâches de Thomas dans Smart Board (data/tasks.json) — ajout (questions qui manquent, dates converties, aperçu) et mise à jour (fait, en cours, décaler, préciser), toujours après validation. À utiliser dans le projet smart-board quand Thomas tape « /tache … », « ajoute une tâche », « nouvelle tâche », « ajoute dans la to-do », donne une liste de choses à faire, ou dit qu'une tâche est faite, commencée ou à décaler (« passeport : c'est fait », « décale l'hôtel à lundi »).
 ---
 
-# /tache — capturer des tâches dans Smart Board
+# /tache — capturer et mettre à jour des tâches dans Smart Board
 
 Promesse du produit : **« Dis-le, c'est rangé. »** Thomas dit ses tâches comme elles lui viennent ;
 tu poses les questions qui manquent et tu ranges des tâches **complètes**. Rien n'est écrit sans son « ok ».
 
-Périmètre : **ajouter** des tâches. Modifier ou terminer une tâche existante, c'est l'US-1.3, pas encore
-outillée : dans ce cas, dis-le et propose de le faire à la main.
+Deux usages, à repérer d'après le message :
+- **Ajouter** des tâches → section « Déroulé » ci-dessous.
+- **Mettre à jour** une tâche existante (« c'est fait », « je commence », « décale », « renomme », « précise ») →
+  section « Mettre à jour une tâche ». Un même message peut mêler les deux : traite les mises à jour, puis les ajouts.
+
+Supprimer une tâche n'est pas encore outillé (US-4.1) : dis-le, et propose plutôt de la marquer comme faite.
 
 ## Le format d'une tâche
 | Champ | Obligatoire | Règle |
@@ -52,6 +56,34 @@ L'`id`, le statut, la source et les dates de création sont remplis par le code 
    Le script valide tout et n'ajoute **rien** si une tâche est incomplète : corrige et relance.
 8. **Confirmer** : affiche la liste complète des tâches non terminées, triée par échéance, en signalant
    celles en retard et celles du jour.
+
+## Mettre à jour une tâche
+1. **Situer** : comme pour un ajout, `date` puis lecture de `data/tasks.json`.
+2. **Comprendre le changement** :
+   | Thomas dit… | Changement |
+   |---|---|
+   | « c'est fait », « terminé », « fini » | `status: "done"` |
+   | « je commence », « en cours », « je m'y mets » | `status: "in_progress"` |
+   | « à refaire », « pas fini en fait » | `status: "todo"` |
+   | « décale à lundi », « pour vendredi », « repousse d'une semaine » | `dueDate` convertie (règles de la section Dates) |
+   | « renomme en… », « précise que… » | `title` ou `description` reformulés |
+   | « c'est pro / perso » | `category` |
+3. **Retrouver la tâche** à partir des mots de Thomas (« passeport », « hôtel »), parmi les tâches **non faites**
+   d'abord. Ignore les majuscules et les accents.
+   - Une seule candidate : continue.
+   - **Plusieurs candidates** (ex. « Londres » → hôtel, ETA, adaptateurs) : liste-les numérotées avec leur échéance
+     et demande laquelle. **Ne choisis jamais à sa place.**
+   - Aucune : dis-le, montre les tâches les plus proches, et propose d'en créer une.
+4. **Aperçu** : un tableau `Tâche | Champ | Avant | Après` (dates avec le jour : « ven. 20 nov. 2026 »), puis « ok ? ».
+   Signale une nouvelle échéance passée ou un week-end si la tâche demande un guichet.
+5. **Appliquer** après accord explicite, une tâche à la fois, avec le script (jamais d'édition à la main) :
+   ```bash
+   npm run --silent tasks:update <<'EOF'
+   {"id": "t-20261114-1", "changes": {"status": "done"}}
+   EOF
+   ```
+   Le script affiche « avant → après » et ne modifie **rien** si le changement est invalide : corrige et relance.
+6. **Confirmer** : comme pour un ajout, la liste des tâches non terminées triée par échéance.
 
 ## Règles
 - Français, tutoiement, phrases courtes.
