@@ -3,7 +3,7 @@
   "project": {
     "name": "Smart Board",
     "tagline": "« Dis-le, c'est rangé. » Une to-do où l'assistant te pose les questions qui manquent.",
-    "updatedAt": "2026-11-15"
+    "updatedAt": "2026-11-16"
   },
   "milestones": [
     {
@@ -601,12 +601,14 @@
     },
     {
       "id": "D17",
-      "status": "open",
+      "status": "decided",
       "question": "Créer le dépôt GitHub avant M2 (Vercel et Issues en ont besoin).",
       "related": [
         "US-3.1",
         "US-4.4"
-      ]
+      ],
+      "date": "2026-11-15",
+      "decision": "Dépôt privé titou2105/smart-board créé le 2026-11-15, main poussé. À rendre public pour le portfolio (US-3.3)."
     },
     {
       "id": "D18",
