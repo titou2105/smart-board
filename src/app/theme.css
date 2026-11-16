@@ -1,0 +1,111 @@
+/* Généré par la skill design du harnais (Calme & précis v1, accent indigo).
+   Ne pas modifier à la main : change docs/design.md ou tokens.json, puis relance build.mjs.
+   À importer dans globals.css, après les imports Tailwind / shadcn :  @import "./theme.css";
+   et supprimer les blocs :root et .dark générés par shadcn. */
+
+:root {
+  --radius: 0.625rem;
+  --elevation-card: 0 1px 2px rgba(0,0,0,0.06);
+  --elevation-float: 0 4px 12px rgba(0,0,0,0.08);
+  --background: #f7f7f5;
+  --foreground: #18181b;
+  --card: #ffffff;
+  --card-foreground: #18181b;
+  --popover: #ffffff;
+  --popover-foreground: #18181b;
+  --primary: #4f46e5;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f0ed;
+  --secondary-foreground: #18181b;
+  --muted: #f1f0ed;
+  --muted-foreground: #5f5f68;
+  --accent: #f1f0ed;
+  --accent-foreground: #18181b;
+  --destructive: #b91c1c;
+  --destructive-foreground: #ffffff;
+  --border: #e4e3df;
+  --input: #e4e3df;
+  --ring: #4f46e5;
+  --chart-1: #4f46e5;
+  --chart-2: #166534;
+  --chart-3: #b45309;
+  --chart-4: #b91c1c;
+  --chart-5: #5f5f68;
+  --sidebar: #f7f7f5;
+  --sidebar-foreground: #18181b;
+  --sidebar-primary: #4f46e5;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f1f0ed;
+  --sidebar-accent-foreground: #18181b;
+  --sidebar-border: #e4e3df;
+  --sidebar-ring: #4f46e5;
+  --accent-soft: #ededfc;
+  --success: #166534;
+  --success-soft: #e7f5ec;
+  --warn: #b45309;
+  --warn-soft: #fdf3e4;
+  --danger-soft: #fdecec;
+}
+
+.dark {
+  --elevation-card: none;
+  --elevation-float: 0 4px 12px rgba(0,0,0,0.5);
+  --background: #111113;
+  --foreground: #ededf0;
+  --card: #19191c;
+  --card-foreground: #ededf0;
+  --popover: #19191c;
+  --popover-foreground: #ededf0;
+  --primary: #8b85ff;
+  --primary-foreground: #111113;
+  --secondary: #222226;
+  --secondary-foreground: #ededf0;
+  --muted: #222226;
+  --muted-foreground: #a0a0a8;
+  --accent: #222226;
+  --accent-foreground: #ededf0;
+  --destructive: #f87171;
+  --destructive-foreground: #111113;
+  --border: #2c2c31;
+  --input: #2c2c31;
+  --ring: #8b85ff;
+  --chart-1: #8b85ff;
+  --chart-2: #4ade80;
+  --chart-3: #fbbf24;
+  --chart-4: #f87171;
+  --chart-5: #a0a0a8;
+  --sidebar: #111113;
+  --sidebar-foreground: #ededf0;
+  --sidebar-primary: #8b85ff;
+  --sidebar-primary-foreground: #111113;
+  --sidebar-accent: #222226;
+  --sidebar-accent-foreground: #ededf0;
+  --sidebar-border: #2c2c31;
+  --sidebar-ring: #8b85ff;
+  --accent-soft: #302f49;
+  --success: #4ade80;
+  --success-soft: #14301f;
+  --warn: #fbbf24;
+  --warn-soft: #3a2b0d;
+  --danger-soft: #3b1717;
+}
+
+/* Couleurs d'état utilisables en classes Tailwind : bg-success-soft text-success, etc. */
+@theme inline {
+  --color-accent-soft: var(--accent-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-danger-soft: var(--danger-soft);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --shadow-card: var(--elevation-card);
+  --shadow-float: var(--elevation-float);
+  --text-base: 0.9375rem;
+  --text-base--line-height: 1.5;
+  --text-lg: 1.0625rem;
+}
+
+@layer base {
+  h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.01em; }
+}
