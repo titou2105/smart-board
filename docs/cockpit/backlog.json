@@ -234,13 +234,16 @@
     {
       "id": "US-2.3",
       "epic": "E2",
-      "title": "Modifier une tâche et changer son statut",
+      "title": "Ouvrir une tâche et changer son statut",
       "size": "S",
       "status": "in_progress",
-      "story": "En tant qu'utilisateur, je veux corriger une tâche et la passer à « en cours » ou « faite », afin de suivre l'avancement.",
+      "story": "En tant que Thomas, je veux ouvrir une tâche pour voir son détail et la passer à « en cours », « faite » ou la reporter à demain, afin de suivre l'avancement d'un geste.",
       "criteria": [
-        "Les changements sont enregistrés dans le même fichier que celui de /tache."
-      ]
+        "Toucher une tâche ouvre son détail (feuille montante sur téléphone, panneau à droite sur ordinateur) : titre, description, échéance en toutes lettres, statut et origine.",
+        "Depuis le détail, en un geste : Marquer comme faite (ou Rouvrir), Commencer, Demain (report à demain, heure de Paris).",
+        "Les changements sont écrits dans data/tasks.json (le même fichier que /tache) ; vérifié à 375 px et en large, en clair et en sombre, en FR et en EN."
+      ],
+      "note": "Découpée le 2026-11-16 : la correction du titre, de la description et de l'échéance passe dans l'US-2.6."
     },
     {
       "id": "US-2.4",
@@ -273,6 +276,20 @@
       ],
       "note": "Remplace la vue provisoire de l'US-1.5. Bilan lundi-dimanche (D22). Cocher passe par une Server Action et TaskRepository.update. La description et l'ajout restent pour les US-2.3 et US-2.2. En mode mock, les changements vivent en mémoire jusqu'à l'US-3.2.",
       "doneAt": "2026-11-16"
+    },
+    {
+      "id": "US-2.6",
+      "epic": "E2",
+      "title": "Corriger une tâche",
+      "size": "S",
+      "status": "todo",
+      "story": "En tant que Thomas, je veux corriger le titre, la description ou l'échéance d'une tâche depuis son détail, afin de garder des tâches justes sans passer par Claude Code.",
+      "criteria": [
+        "Un formulaire dans le détail permet de modifier le titre, la description et l'échéance.",
+        "Un champ vide ou une date invalide est refusé, avec un message clair sous le champ (FR et EN).",
+        "Les changements sont écrits dans data/tasks.json."
+      ],
+      "note": "Dépend de l'US-2.3 (fenêtre de détail)."
     },
     {
       "id": "US-3.1",
