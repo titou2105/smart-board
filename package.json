@@ -10,8 +10,9 @@
     "test": "vitest run",
     "typecheck": "next typegen && tsc --noEmit",
     "tasks:check": "tsx scripts/check-tasks.ts",
-    "check": "npm run typecheck && npm run lint && npm test",
-    "tasks:add": "tsx scripts/add-tasks.ts"
+    "check": "npm run lock:check && npm run typecheck && npm run lint && npm test",
+    "tasks:add": "tsx scripts/add-tasks.ts",
+    "lock:check": "npm ci --dry-run --no-audit --no-fund --silent"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
