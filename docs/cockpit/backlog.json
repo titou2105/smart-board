@@ -170,12 +170,14 @@
       "epic": "E1",
       "title": "Mettre à jour une tâche avec /tache",
       "size": "S",
-      "status": "todo",
+      "status": "done",
       "story": "En tant qu'utilisateur, je veux dire « plombier : c'est fait » ou « décale le passeport à lundi », afin de tenir ma liste à jour sans ouvrir l'app.",
       "criteria": [
         "Claude retrouve la tâche, montre le changement et l'applique après validation.",
         "En cas de doute entre plusieurs tâches, Claude demande laquelle."
-      ]
+      ],
+      "doneAt": "2026-11-16",
+      "note": "updateTask (src/core) + npm run tasks:update + section « Mettre à jour » du skill /tache. Test d'acceptation de Thomas OK le 2026-11-16 : passeport décalé au 20 nov., inventaire Engie en cours, « Londres » → demande laquelle."
     },
     {
       "id": "US-1.4",
