@@ -236,7 +236,7 @@
       "epic": "E2",
       "title": "Modifier une tâche et changer son statut",
       "size": "S",
-      "status": "todo",
+      "status": "in_progress",
       "story": "En tant qu'utilisateur, je veux corriger une tâche et la passer à « en cours » ou « faite », afin de suivre l'avancement.",
       "criteria": [
         "Les changements sont enregistrés dans le même fichier que celui de /tache."
