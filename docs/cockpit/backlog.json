@@ -263,7 +263,7 @@
       "epic": "E2",
       "title": "Voir mes tâches dans la nouvelle liste",
       "size": "M",
-      "status": "in_progress",
+      "status": "done",
       "story": "En tant que Thomas, je veux la liste de la direction A (bilan de la semaine, filtre perso/pro, lignes à cocher), afin de voir d'un coup d'œil où j'en suis cette semaine et cocher une tâche en un geste.",
       "criteria": [
         "Un bilan affiche les tâches faites sur celles prévues cette semaine, et le nombre en cours, avec une barre de progression.",
@@ -271,7 +271,8 @@
         "Chaque ligne affiche la case ronde, le titre, l'échéance relative (« Demain », « ven. 20 nov. »), le badge « En cours » plein et la catégorie ; cocher marque la tâche comme faite dans data/tasks.json.",
         "Vérifié à 375 px et en large, en clair et en sombre ; textes en anglais et en français."
       ],
-      "note": "Remplace la vue provisoire de l'US-1.5. Le détail et l'ajout restent ceux des US-2.2 et US-2.3. Dépend de US-2.4."
+      "note": "Remplace la vue provisoire de l'US-1.5. Bilan lundi-dimanche (D22). Cocher passe par une Server Action et TaskRepository.update. La description et l'ajout restent pour les US-2.3 et US-2.2. En mode mock, les changements vivent en mémoire jusqu'à l'US-3.2.",
+      "doneAt": "2026-11-16"
     },
     {
       "id": "US-3.1",
@@ -687,6 +688,16 @@
       "related": [
         "US-1.5",
         "US-5.1"
+      ]
+    },
+    {
+      "id": "D22",
+      "status": "decided",
+      "date": "2026-11-16",
+      "question": "Que veut dire « cette semaine » dans le bilan ?",
+      "decision": "Semaine calendaire du lundi au dimanche. Prévues = échéance dans la semaine + en retard non faites + faites cette semaine ; en cours = toutes les tâches en cours. Le filtre perso/pro s'applique aussi au bilan.",
+      "related": [
+        "US-2.5"
       ]
     }
   ],

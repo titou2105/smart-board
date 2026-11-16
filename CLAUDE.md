@@ -121,6 +121,13 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
   « Mettre à jour » de `/tache`. Test d'acceptation OK (passeport décalé, Engie en cours, « Londres » ambigu → question).
   **M1 « Capture via Claude Code » bouclé (5/5 US), avec 2 semaines d'avance sur le 30 novembre.**
   Prochaine étape : M2 — US-2.5 (nouvelle liste, direction A), puis US-2.2 / US-2.3, démo Vercel (US-3.x).
+- 2026-11-16 — US-2.5 faite (branche `us-2.5-nouvelle-liste`) : liste direction A — bilan de la semaine lundi-dimanche
+  (`src/core/week-summary.ts`, D22), filtre `?filter=perso|pro`, case ronde qui écrit via Server Action
+  (`src/app/[locale]/actions.ts` → `TaskRepository.update`), échéance relative, badge « En cours » plein.
+  Vérifié sur une copie temporaire des tâches : 375 px et large, clair et sombre, FR/EN ; 37 tests, build OK.
+  À savoir : si le serveur de dev sert un vieux style (serif, bouton noir), vider `.next` ; un onglet du panneau
+  navigateur masqué reste sur « Chargement… » (rendu différé en pause), ce n'est pas un bug.
+  Prochaine étape : US-2.2 (ajouter une tâche à la main) ou US-2.3 (détail / modifier), puis démo Vercel.
   Blocages : Thomas doit recréer `.env.local` dans le projet (le premier a été créé dans `C:\Users\tthiv`).
 
 ## Décisions
