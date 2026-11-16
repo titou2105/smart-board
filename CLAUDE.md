@@ -111,6 +111,13 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
   diagnostic en cours (dossier de la session ? demande d'autorisation non vue ? `/tache` tapé sans texte ?).
   Prochaine étape : diagnostiquer `/tache` avec Thomas, puis US-2.5 (nouvelle liste).
   Blocages : aucun.
+- 2026-11-16 — US-2.4 fusionnée (PR #4 ; la CI avait échoué sur le fichier de verrouillage, réparé, et
+  `npm run check` contient désormais `lock:check`). `/tache` : le « ne retourne rien » venait d'une commande tapée dans
+  PowerShell au lieu de la conversation. Test d'acceptation OK (2 tâches ajoutées, 6 au total) : **US-1.2 faite**,
+  critère 1 réécrit (questions regroupées en un message).
+  M1 : il reste l'US-1.3 (mettre à jour une tâche avec `/tache`, S) pour le 30 novembre.
+  Prochaine étape : US-1.3 ou US-2.5, au choix de Thomas.
+  Blocages : Thomas doit recréer `.env.local` dans le projet (le premier a été créé dans `C:\Users\tthiv`).
 
 ## Décisions
 <!-- Claude ajoute ici les choix importants : date — décision — pourquoi -->
