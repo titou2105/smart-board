@@ -244,7 +244,7 @@
       "epic": "E2",
       "title": "Appliquer le design system",
       "size": "S",
-      "status": "todo",
+      "status": "in_progress",
       "tech": true,
       "story": "En tant que porteur du projet, je veux le thème « Calme & précis » (accent indigo) dans l'app, afin que chaque écran suive les mêmes couleurs, la même typo et le mode sombre sans couleur en dur.",
       "criteria": [
