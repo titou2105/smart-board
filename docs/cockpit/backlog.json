@@ -208,12 +208,14 @@
       "epic": "E2",
       "title": "Atelier UI",
       "size": "M",
-      "status": "todo",
+      "status": "done",
       "story": "En tant que porteur du projet, je veux comparer plusieurs maquettes de vues, afin de choisir une interface qui me convainc vraiment.",
       "criteria": [
         "Au moins 3 maquettes (dont la liste par échéance), testées sur ordinateur et sur téléphone.",
         "Décision notée dans le CLAUDE.md (vue par défaut, vues secondaires, données affichées)."
-      ]
+      ],
+      "doneAt": "2026-11-16",
+      "note": "Prototype cliquable : docs/design/atelier.html (3 directions, 3 accents, clair/sombre, téléphone/ordinateur). Choix : direction A (D14)."
     },
     {
       "id": "US-2.2",
@@ -236,6 +238,36 @@
       "criteria": [
         "Les changements sont enregistrés dans le même fichier que celui de /tache."
       ]
+    },
+    {
+      "id": "US-2.4",
+      "epic": "E2",
+      "title": "Appliquer le design system",
+      "size": "S",
+      "status": "todo",
+      "tech": true,
+      "story": "En tant que porteur du projet, je veux le thème « Calme & précis » (accent indigo) dans l'app, afin que chaque écran suive les mêmes couleurs, la même typo et le mode sombre sans couleur en dur.",
+      "criteria": [
+        "Le thème est généré par build.mjs (src/app/theme.css) et importé dans globals.css ; les blocs de couleurs shadcn sont supprimés.",
+        "La police Inter est chargée ; l'app suit le thème clair ou sombre du système.",
+        "Aucune couleur en dur dans le code des écrans (recherche #rrggbb, rgb(, bg-[#)."
+      ],
+      "note": "Débloque US-2.5. Procédure : skill design, mode Appliquer."
+    },
+    {
+      "id": "US-2.5",
+      "epic": "E2",
+      "title": "Voir mes tâches dans la nouvelle liste",
+      "size": "M",
+      "status": "todo",
+      "story": "En tant que Thomas, je veux la liste de la direction A (bilan de la semaine, filtre perso/pro, lignes à cocher), afin de voir d'un coup d'œil où j'en suis cette semaine et cocher une tâche en un geste.",
+      "criteria": [
+        "Un bilan affiche les tâches faites sur celles prévues cette semaine, et le nombre en cours, avec une barre de progression.",
+        "Le filtre Tout / Perso / Pro filtre les sections et le bilan.",
+        "Chaque ligne affiche la case ronde, le titre, l'échéance relative (« Demain », « ven. 20 nov. »), le badge « En cours » plein et la catégorie ; cocher marque la tâche comme faite dans data/tasks.json.",
+        "Vérifié à 375 px et en large, en clair et en sombre ; textes en anglais et en français."
+      ],
+      "note": "Remplace la vue provisoire de l'US-1.5. Le détail et l'ajout restent ceux des US-2.2 et US-2.3. Dépend de US-2.4."
     },
     {
       "id": "US-3.1",
@@ -569,11 +601,13 @@
     },
     {
       "id": "D14",
-      "status": "open",
-      "question": "Quelle vue par défaut ? Aucune des 3 maquettes ne convainc pour l'instant.",
+      "status": "decided",
+      "question": "Quelle vue par défaut ?",
       "related": [
         "US-2.1"
-      ]
+      ],
+      "date": "2026-11-16",
+      "decision": "Direction A de l'atelier (docs/design/atelier.html) : liste par échéance en lignes, case ronde, filtre perso/pro, bilan de la semaine, badge « En cours » plein, « Dis ta tâche… » à portée de pouce. Pas de vue secondaire pour l'instant (la semaine en colonnes de la direction B reste une piste). Dans la liste : titre, échéance relative, statut, catégorie ; la description dans le détail. Accent indigo par défaut. Détails : docs/design.md."
     },
     {
       "id": "D15",
