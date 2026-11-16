@@ -208,7 +208,7 @@
       "epic": "E2",
       "title": "Atelier UI",
       "size": "M",
-      "status": "todo",
+      "status": "in_progress",
       "story": "En tant que porteur du projet, je veux comparer plusieurs maquettes de vues, afin de choisir une interface qui me convainc vraiment.",
       "criteria": [
         "Au moins 3 maquettes (dont la liste par échéance), testées sur ordinateur et sur téléphone.",
