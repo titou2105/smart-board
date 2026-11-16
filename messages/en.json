@@ -4,6 +4,7 @@
     "description": "Say it, it's sorted. A to-do list where the assistant asks what's missing."
   },
   "Home": {
+    "title": "My tasks",
     "tagline": "Say it, it's sorted.",
     "loading": "Loading your tasks…"
   },
@@ -14,8 +15,26 @@
       "next7Days": "Next 7 days",
       "later": "Later"
     },
+    "week": {
+      "label": "This week",
+      "done": "done this week",
+      "inProgress": "{count} in progress"
+    },
+    "filters": {
+      "label": "Filter by category",
+      "all": "All",
+      "perso": "Personal",
+      "pro": "Work"
+    },
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "overdueOn": "Overdue · {date}",
+    "inProgress": "In progress",
+    "markDone": "Mark “{title}” as done",
+    "reopen": "Reopen “{title}”",
     "done": "{count, plural, one {# task done} other {# tasks done}}",
     "empty": "No task yet. Add one with /tache in Claude Code.",
+    "emptyFilter": "Nothing to do here for this filter.",
     "error": "Your tasks couldn't be loaded."
   }
 }
