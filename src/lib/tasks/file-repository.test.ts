@@ -44,3 +44,24 @@ describe("createFileRepository", () => {
     await expect(createFileRepository(path).list()).rejects.toBeInstanceOf(TaskSourceError);
   });
 });
+
+describe("createFileRepository.update", () => {
+  it("writes the change to the file and refuses an invalid one", async () => {
+    const path = join(dir, "update.json");
+    await writeFile(path, JSON.stringify({
+      schemaVersion: 1,
+      tasks: [{
+        id: "t1", title: "a", description: "b", dueDate: "2026-11-20", status: "todo", source: "manual",
+        createdAt: "2026-11-15T00:00:00.000Z", updatedAt: "2026-11-15T00:00:00.000Z",
+      }],
+    }));
+    const repository = createFileRepository(path);
+
+    const updated = await repository.update("t1", { status: "done" });
+    expect(updated.status).toBe("done");
+    expect((await repository.list())[0].status).toBe("done");
+
+    await expect(repository.update("t1", { dueDate: "lundi" })).rejects.toBeInstanceOf(TaskSourceError);
+    expect((await repository.list())[0].dueDate).toBe("2026-11-20");
+  });
+});

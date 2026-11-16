@@ -4,6 +4,7 @@
     "description": "Dis-le, c'est rangé. Une to-do où l'assistant te pose les questions qui manquent."
   },
   "Home": {
+    "title": "Mes tâches",
     "tagline": "Dis-le, c'est rangé.",
     "loading": "Chargement de tes tâches…"
   },
@@ -14,8 +15,26 @@
       "next7Days": "Dans les 7 jours",
       "later": "Plus tard"
     },
+    "week": {
+      "label": "Cette semaine",
+      "done": "faites cette semaine",
+      "inProgress": "{count} en cours"
+    },
+    "filters": {
+      "label": "Filtrer par catégorie",
+      "all": "Tout",
+      "perso": "Perso",
+      "pro": "Pro"
+    },
+    "today": "Aujourd'hui",
+    "tomorrow": "Demain",
+    "overdueOn": "En retard · {date}",
+    "inProgress": "En cours",
+    "markDone": "Marquer « {title} » comme faite",
+    "reopen": "Rouvrir « {title} »",
     "done": "{count, plural, one {# tâche faite} other {# tâches faites}}",
     "empty": "Aucune tâche pour l'instant. Ajoutes-en une avec /tache dans Claude Code.",
+    "emptyFilter": "Rien à faire ici pour ce filtre.",
     "error": "Impossible de charger tes tâches."
   }
 }
