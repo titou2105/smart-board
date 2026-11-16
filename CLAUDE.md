@@ -86,6 +86,11 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
   Prochaine étape : fusionner la branche ; Thomas crée son `.env.local` (`DATA_PROVIDER=file`) et teste `/tache` ;
   puis M2 (atelier UI US-2.1, création du dépôt GitHub).
   Blocages : `.env.local` protégé par le harnais (Thomas le crée lui-même).
+- 2026-11-16 — Dépôt GitHub privé `titou2105/smart-board` créé, `main` poussé (D17 tranchée). La première CI a échoué
+  (fichier de verrouillage), corrigée par la PR #1. Le cycle « une US = une branche = une PR » est désormais complet.
+  Prochaine étape : Thomas crée son `.env.local` (`DATA_PROVIDER=file`) et teste `/tache` (US-1.2, dernière du M1) ;
+  puis M2 : atelier UI (US-2.1).
+  Blocages : aucun.
 
 ## Décisions
 <!-- Claude ajoute ici les choix importants : date — décision — pourquoi -->
