@@ -162,7 +162,7 @@
         "Les dates relatives (« vendredi », « dans 2 semaines ») sont converties et affichées en clair pour validation.",
         "Claude montre la tâche finale et n'écrit dans data/tasks.json qu'après ma validation."
       ],
-      "note": "Skill .claude/skills/tache + script npm run tasks:add en place (2026-11-15). Reste : test d'acceptation par Thomas dans une nouvelle session."
+      "note": "Skill .claude/skills/tache + script npm run tasks:add en place (2026-11-15). Reste : test d'acceptation par Thomas dans une nouvelle session. 2026-11-16 : test de Thomas KO (« /tache ne retourne rien ») alors que /tache répond en mode non interactif (claude -p) : à diagnostiquer avec lui."
     },
     {
       "id": "US-1.3",
@@ -244,7 +244,7 @@
       "epic": "E2",
       "title": "Appliquer le design system",
       "size": "S",
-      "status": "in_progress",
+      "status": "done",
       "tech": true,
       "story": "En tant que porteur du projet, je veux le thème « Calme & précis » (accent indigo) dans l'app, afin que chaque écran suive les mêmes couleurs, la même typo et le mode sombre sans couleur en dur.",
       "criteria": [
@@ -252,7 +252,8 @@
         "La police Inter est chargée ; l'app suit le thème clair ou sombre du système.",
         "Aucune couleur en dur dans le code des écrans (recherche #rrggbb, rgb(, bg-[#)."
       ],
-      "note": "Débloque US-2.5. Procédure : skill design, mode Appliquer."
+      "note": "Débloque US-2.5. Thème généré (src/app/theme.css), Inter, next-themes (suit le système, sans bouton). Vérifié à 375 px et en large, clair et sombre.",
+      "doneAt": "2026-11-16"
     },
     {
       "id": "US-2.5",

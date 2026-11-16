@@ -100,6 +100,13 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
   Prochaine étape : US-2.4, puis US-2.5 ; test de `/tache` (US-1.2) toujours en attente.
   Blocages : aucun. Le cockpit ne s'ouvre pas par double-clic chez Thomas (association .html Avast/Chrome) :
   l'ouvrir avec `Start-Process chrome "<chemin complet>"`.
+- 2026-11-16 — US-2.4 faite (branche `us-2.4-design-system`) : thème « Calme & précis » généré (`src/app/theme.css`,
+  accent indigo), couleurs shadcn retirées, police Inter, mode sombre qui suit le système (`next-themes`).
+  Vérifié : 375 px et large, clair et sombre, aucune couleur en dur, check + build OK.
+  US-1.2 : Thomas dit que `/tache` « ne retourne rien » dans sa session, alors qu'il répond bien via `claude -p` :
+  diagnostic en cours (dossier de la session ? demande d'autorisation non vue ? `/tache` tapé sans texte ?).
+  Prochaine étape : diagnostiquer `/tache` avec Thomas, puis US-2.5 (nouvelle liste).
+  Blocages : aucun.
 
 ## Décisions
 <!-- Claude ajoute ici les choix importants : date — décision — pourquoi -->
