@@ -140,3 +140,25 @@ export function addTasks(file: TaskFile, inputs: NewTaskInput[], now: Date): Add
   const result = validateTaskFile({ ...file, tasks: [...file.tasks, ...added] });
   return result.ok ? { ok: true, file: result.file, added } : result;
 }
+
+/** Fields that can be changed on an existing task (id, source and creation date never change). */
+export type TaskChanges = Partial<Pick<Task, "title" | "description" | "dueDate" | "status" | "category">>;
+
+export type UpdateTaskResult = { ok: true; file: TaskFile; before: Task; after: Task } | { ok: false; errors: string[] };
+
+/**
+ * Applies changes to one task, without mutating the file.
+ * The whole file is validated again: an invalid change (e.g. "lundi" as a date) changes nothing.
+ */
+export function updateTask(file: TaskFile, id: string, changes: TaskChanges, now: Date): UpdateTaskResult {
+  const index = file.tasks.findIndex((task) => task.id === id);
+  if (index === -1) return { ok: false, errors: [`Aucune tâche avec l'id « ${id} ».`] };
+  if (Object.keys(changes).length === 0) return { ok: false, errors: ["Aucun changement demandé."] };
+
+  const before = file.tasks[index];
+  const after: Task = { ...before, ...changes, updatedAt: now.toISOString() };
+  const tasks = file.tasks.map((task, i) => (i === index ? after : task));
+
+  const result = validateTaskFile({ ...file, tasks });
+  return result.ok ? { ok: true, file: result.file, before, after } : result;
+}
