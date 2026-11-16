@@ -46,6 +46,10 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
 - Toute source externe (LLM, stockage) passe par une interface dans `src/core/`, avec une implémentation mock.
 - Code et README en anglais ; commentaires, commits et interface en français (langue de l'UI : question ouverte).
 - Quand une US change de statut, mettre à jour `docs/cockpit/backlog.json` puis régénérer le cockpit.
+- **Fichier de verrouillage** : sous Windows, `npm install` retire de `package-lock.json` des paquets propres à Linux
+  (`@emnapi/*`), et la CI (`npm ci` sous Linux) échoue. `npm run check` le détecte (`lock:check`). Pour ajouter un
+  paquet : repartir du `package-lock.json` de `main` et n'y ajouter que l'entrée du nouveau paquet (cf. US-2.4),
+  puis vérifier avec `npm run lock:check`.
 
 ## Où on en est
 <!-- Mis à jour en fin de session : date — état actuel — prochaine étape — blocages -->
@@ -100,6 +104,13 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
   Prochaine étape : US-2.4, puis US-2.5 ; test de `/tache` (US-1.2) toujours en attente.
   Blocages : aucun. Le cockpit ne s'ouvre pas par double-clic chez Thomas (association .html Avast/Chrome) :
   l'ouvrir avec `Start-Process chrome "<chemin complet>"`.
+- 2026-11-16 — US-2.4 faite (branche `us-2.4-design-system`) : thème « Calme & précis » généré (`src/app/theme.css`,
+  accent indigo), couleurs shadcn retirées, police Inter, mode sombre qui suit le système (`next-themes`).
+  Vérifié : 375 px et large, clair et sombre, aucune couleur en dur, check + build OK.
+  US-1.2 : Thomas dit que `/tache` « ne retourne rien » dans sa session, alors qu'il répond bien via `claude -p` :
+  diagnostic en cours (dossier de la session ? demande d'autorisation non vue ? `/tache` tapé sans texte ?).
+  Prochaine étape : diagnostiquer `/tache` avec Thomas, puis US-2.5 (nouvelle liste).
+  Blocages : aucun.
 
 ## Décisions
 <!-- Claude ajoute ici les choix importants : date — décision — pourquoi -->

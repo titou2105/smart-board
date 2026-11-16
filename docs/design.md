@@ -34,5 +34,8 @@ Interactions retenues : cocher en un geste depuis la liste ; tout le reste (en c
 ## Choix spécifiques (écarts à la base)
 - 2026-11-16 — Le badge « En cours » est **plein** (fond accent) et non sur fond doux. Pourquoi : Thomas veut voir
   d'un coup d'œil ce qui est commencé ; c'est un état central de son usage, pas un détail.
+- 2026-11-16 — Police : la variable de `next/font` s'appelle `--font-inter` (et non `--font-sans` comme dans la
+  procédure du skill), puis `globals.css` fait `--font-sans: var(--font-inter)`. Pourquoi : `--font-sans: var(--font-sans)`
+  dans `@theme inline` se référence lui-même et l'app retombait en police serif (bug vu à l'US-1.4).
 - 2026-11-16 — Les lignes de tâches sont regroupées dans une carte par section (pas une carte par tâche). Pourquoi :
   densité « Calme & précis » avec 10 à 30 tâches ouvertes, tout en gardant les sections lisibles.
