@@ -263,7 +263,7 @@
       "epic": "E2",
       "title": "Voir mes tâches dans la nouvelle liste",
       "size": "M",
-      "status": "todo",
+      "status": "in_progress",
       "story": "En tant que Thomas, je veux la liste de la direction A (bilan de la semaine, filtre perso/pro, lignes à cocher), afin de voir d'un coup d'œil où j'en suis cette semaine et cocher une tâche en un geste.",
       "criteria": [
         "Un bilan affiche les tâches faites sur celles prévues cette semaine, et le nombre en cours, avec une barre de progression.",
