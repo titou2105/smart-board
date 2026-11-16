@@ -35,6 +35,29 @@
     "done": "{count, plural, one {# task done} other {# tasks done}}",
     "empty": "No task yet. Add one with /tache in Claude Code.",
     "emptyFilter": "Nothing to do here for this filter.",
-    "error": "Your tasks couldn't be loaded."
+    "error": "Your tasks couldn't be loaded.",
+    "open": "Open “{title}”"
+  },
+  "Detail": {
+    "close": "Close",
+    "description": "Description",
+    "dueDate": "Due date",
+    "status": "Status",
+    "origin": "Added",
+    "overdue": "overdue",
+    "markDone": "Mark as done",
+    "reopen": "Reopen",
+    "start": "Start",
+    "tomorrow": "Tomorrow",
+    "statuses": {
+      "todo": "To do",
+      "in_progress": "In progress",
+      "done": "Done"
+    },
+    "origins": {
+      "assistant": "With the assistant (Claude Code)",
+      "manual": "By hand",
+      "mail": "From an email"
+    }
   }
 }
