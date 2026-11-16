@@ -91,6 +91,15 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
   Prochaine étape : Thomas crée son `.env.local` (`DATA_PROVIDER=file`) et teste `/tache` (US-1.2, dernière du M1) ;
   puis M2 : atelier UI (US-2.1).
   Blocages : aucun.
+- 2026-11-16 — US-2.1 faite (branche `us-2.1-atelier-ui`) : questions de cadrage UI détaillées, prototype cliquable
+  `docs/design/atelier.html` (3 directions, 3 accents, clair/sombre, téléphone/ordinateur, données fictives).
+  Thomas retient la **direction A** (liste) ; accent indigo par défaut. `docs/design.md` écrit (contrastes AA 24/24).
+  D14 tranchée. Nouvelles US : US-2.4 (appliquer le design system) puis US-2.5 (nouvelle liste).
+  Usage de Thomas : ajoute ses tâches surtout sur téléphone, consulte au fil de la semaine pour voir où il en est,
+  10 à 30 tâches ouvertes, « En cours » important.
+  Prochaine étape : US-2.4, puis US-2.5 ; test de `/tache` (US-1.2) toujours en attente.
+  Blocages : aucun. Le cockpit ne s'ouvre pas par double-clic chez Thomas (association .html Avast/Chrome) :
+  l'ouvrir avec `Start-Process chrome "<chemin complet>"`.
 
 ## Décisions
 <!-- Claude ajoute ici les choix importants : date — décision — pourquoi -->
@@ -136,6 +145,10 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
 
 - 2026-11-15 — « Cette semaine » = les 7 prochains jours (D20) ; tâches lues via `TaskRepository`, `DATA_PROVIDER`
   mock par défaut (D21). La liste est rendue à chaque requête (`connection()` + `Suspense`, Cache Components).
+
+- 2026-11-16 — UI : direction A de l'atelier (liste par échéance en lignes, bilan de la semaine, filtre perso/pro,
+  « En cours » plein, saisie à portée de pouce). Pas de vue secondaire pour l'instant. Accent indigo. Détails dans
+  `docs/design.md` (D14). Pourquoi : correspond à l'usage réel (ajout sur téléphone, suivi de la semaine).
 
 ## Feuille de route
 - Détail : `docs/product.md` et le cockpit (`docs/cockpit/index.html`).
