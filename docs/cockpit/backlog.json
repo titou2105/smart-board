@@ -3,7 +3,7 @@
   "project": {
     "name": "Smart Board",
     "tagline": "« Dis-le, c'est rangé. » Une to-do où l'assistant te pose les questions qui manquent.",
-    "updatedAt": "2026-11-16"
+    "updatedAt": "2026-11-18"
   },
   "milestones": [
     {
@@ -283,14 +283,15 @@
       "epic": "E2",
       "title": "Corriger une tâche",
       "size": "S",
-      "status": "todo",
+      "status": "done",
       "story": "En tant que Thomas, je veux corriger le titre, la description ou l'échéance d'une tâche depuis son détail, afin de garder des tâches justes sans passer par Claude Code.",
       "criteria": [
         "Un formulaire dans le détail permet de modifier le titre, la description et l'échéance.",
         "Un champ vide ou une date invalide est refusé, avec un message clair sous le champ (FR et EN).",
         "Les changements sont écrits dans data/tasks.json."
       ],
-      "note": "Dépend de l'US-2.3 (fenêtre de détail)."
+      "note": "Validation par champ dans src/core/task-validation.ts (codes traduits à l'écran), formulaire réutilisable src/components/task-form.tsx (servira à l'US-2.2), sélecteur de date natif, revalidation côté serveur.",
+      "doneAt": "2026-11-18"
     },
     {
       "id": "US-3.1",

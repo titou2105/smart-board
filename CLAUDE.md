@@ -134,6 +134,12 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
   actions Marquer comme faite / Rouvrir, Commencer, Demain (`src/app/[locale]/actions.ts`).
   Vérifié sur une copie temporaire : 375 px et large, clair et sombre, FR/EN, chaque action écrit dans le fichier.
   Prochaine étape : US-2.6 (corriger une tâche) ou US-2.2 (ajouter une tâche), puis démo Vercel (US-3.x).
+- 2026-11-18 — US-2.6 faite (branche `us-2.6-corriger-tache`) : bouton « Modifier » dans le détail, formulaire
+  réutilisable `src/components/task-form.tsx` (titre, description, échéance avec sélecteur de date natif), validation par
+  champ en codes traduits (`src/core/task-validation.ts`, 3 tests), revalidation dans la Server Action `updateTaskFields`.
+  Vérifié sur une copie : titre vide refusé avec message sous le champ et rien d'écrit ; correction valide écrite,
+  détail mis à jour sans se fermer ; téléphone clair, ordinateur sombre, FR et EN (cookie NEXT_LOCALE=en). 40 tests.
+  Prochaine étape : US-2.2 (ajouter une tâche, réutilise le formulaire + catégorie), puis démo Vercel (US-3.x).
   Blocages : Thomas doit recréer `.env.local` dans le projet (le premier a été créé dans `C:\Users\tthiv`).
 
 ## Décisions

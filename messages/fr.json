@@ -58,6 +58,20 @@
       "assistant": "Avec l'assistant (Claude Code)",
       "manual": "À la main",
       "mail": "Depuis un mail"
+    },
+    "edit": "Modifier"
+  },
+  "Form": {
+    "title": "Titre",
+    "description": "Description",
+    "dueDate": "Échéance",
+    "save": "Enregistrer",
+    "saving": "Enregistrement…",
+    "cancel": "Annuler",
+    "saveFailed": "La tâche n'a pas pu être enregistrée. Réessaie.",
+    "errors": {
+      "required": "Ce champ est obligatoire.",
+      "invalidDate": "Saisis une date valide."
     }
   }
 }
