@@ -53,8 +53,8 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
 
 ## Où on en est
 <!-- Remplacé (pas complété) en fin de session, 5 lignes maximum : date — état actuel — prochaine étape — blocages -->
-2026-11-18 — M1 bouclé (5/5 US). M2 en cours : E2 bouclé (US-2.2 à 2.6 fusionnées). US-3.1 (démo Vercel) en cours sur sa branche.
-Prochaine étape : finir US-3.1, puis US-3.2 (données de démo par navigateur). Cible M2 : 18 décembre.
+2026-11-19 — M1 bouclé (5/5 US). M2 en cours : E2 bouclé ; US-3.1 faite, démo en ligne : https://smart-board-puce.vercel.app
+Prochaine étape : US-3.2 (données de démo par navigateur), puis US-3.3 (README). Cible M2 : 18 décembre.
 Blocages : Thomas doit recréer `.env.local` dans le projet (le premier a été créé dans `C:\Users\tthiv`).
 
 ## Décisions

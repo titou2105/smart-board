@@ -43,3 +43,6 @@
 - 2026-11-16 — UI : direction A de l'atelier (liste par échéance en lignes, bilan de la semaine, filtre perso/pro,
   « En cours » plein, saisie à portée de pouce). Pas de vue secondaire pour l'instant. Accent indigo. Détails dans
   `docs/design.md` (D14). Pourquoi : correspond à l'usage réel (ajout sur téléphone, suivi de la semaine).
+- 2026-11-19 — Démo hébergée sur Vercel (offre Hobby, gratuite), projet `smart-board` relié au dépôt GitHub :
+  chaque push sur `main` redéploie la production, chaque branche a son aperçu. Aucune variable d'environnement
+  (mock par défaut). L'app GitHub Vercel n'a accès qu'à ce dépôt. URL : https://smart-board-puce.vercel.app

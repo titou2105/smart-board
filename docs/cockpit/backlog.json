@@ -3,7 +3,7 @@
   "project": {
     "name": "Smart Board",
     "tagline": "« Dis-le, c'est rangé. » Une to-do où l'assistant te pose les questions qui manquent.",
-    "updatedAt": "2026-11-18"
+    "updatedAt": "2026-11-19"
   },
   "milestones": [
     {
@@ -303,12 +303,14 @@
       "epic": "E3",
       "title": "Démo publique",
       "size": "S",
-      "status": "in_progress",
+      "status": "done",
       "story": "En tant que recruteur, je veux ouvrir la démo depuis un lien, afin de tester l'app sans rien installer.",
       "criteria": [
         "L'app est en ligne sur Vercel (offre gratuite), sur des données fictives.",
         "Chaque push sur main met à jour la démo automatiquement."
-      ]
+      ],
+      "note": "Démo : https://smart-board-puce.vercel.app (compte Vercel Hobby titou2105, app GitHub Vercel limitée au dépôt smart-board). Aucune variable d'environnement : DATA_PROVIDER=mock par défaut. Les changements faits sur la démo restent en mémoire du serveur jusqu'à l'US-3.2.",
+      "doneAt": "2026-11-19"
     },
     {
       "id": "US-3.2",
