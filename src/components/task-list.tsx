@@ -2,7 +2,9 @@ import Link from "next/link";
 import { connection } from "next/server";
 import { getFormatter, getTranslations } from "next-intl/server";
 import { CheckButton } from "@/components/check-button";
+import { AddTaskDialog } from "@/components/add-task-dialog";
 import { TaskDetailDialog, type TaskDetailLabels, type TaskDetailView } from "@/components/task-detail-dialog";
+import type { TaskFormLabels } from "@/components/task-form";
 import { addDays, APP_TIME_ZONE, DUE_GROUPS, groupByDueDate, todayIn, type DueGroup } from "@/core/due-groups";
 import type { Task } from "@/core/task";
 import { TaskSourceError } from "@/core/task-repository";
@@ -79,11 +81,25 @@ function categoryLabel(task: Task, t: T): string | null {
 }
 
 /** Link to the current list with other query params: keeps the filter when opening or closing a task. */
-function listHref(filter: CategoryFilter, taskId?: string) {
+function listHref(filter: CategoryFilter, taskId?: string, adding = false) {
   const query: Record<string, string> = {};
   if (filter !== "all") query.filter = filter;
   if (taskId) query.task = taskId;
+  if (adding) query.new = "1";
   return { pathname: "/", query };
+}
+
+/** The primary action of the screen (design system: one per screen), above the list (US-2.2). */
+function AddTaskLink({ filter, t }: { filter: CategoryFilter; t: T }) {
+  return (
+    <Link
+      href={listHref(filter, undefined, true)}
+      scroll={false}
+      className="inline-flex min-h-11 items-center justify-center self-start rounded-md bg-primary px-4 font-semibold text-primary-foreground"
+    >
+      {t("add.button")}
+    </Link>
+  );
 }
 
 async function TaskRow({ task, today, showDate, openHref, t }: { task: Task; today: string; showDate: boolean; openHref: ReturnType<typeof listHref>; t: T }) {
@@ -149,6 +165,8 @@ export async function TaskList({ searchParams }: { searchParams: Promise<Record<
   const params = await searchParams;
   const filter = parseCategoryFilter(params.filter);
   const openTaskId = typeof params.task === "string" ? params.task : undefined;
+  const adding = params.new === "1";
+  const addTask = adding && <AddTask closeHref={listHref(filter)} />;
 
   let allTasks: Task[];
   try {
@@ -169,7 +187,13 @@ export async function TaskList({ searchParams }: { searchParams: Promise<Record<
   }
 
   if (allTasks.length === 0) {
-    return <p className="rounded-lg border border-dashed p-6 text-center text-muted-foreground">{t("empty")}</p>;
+    return (
+      <div className="flex flex-col gap-4">
+        <AddTaskLink filter={filter} t={t} />
+        <p className="rounded-lg border border-dashed p-6 text-center text-muted-foreground">{t("empty")}</p>
+        {addTask}
+      </div>
+    );
   }
 
   const today = todayIn(APP_TIME_ZONE);
@@ -182,6 +206,7 @@ export async function TaskList({ searchParams }: { searchParams: Promise<Record<
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-3">
+        <AddTaskLink filter={filter} t={t} />
         <WeekSummaryCard summary={summarizeWeek(tasks, today)} t={t} />
         <CategoryFilters active={filter} t={t} />
       </div>
@@ -215,6 +240,7 @@ export async function TaskList({ searchParams }: { searchParams: Promise<Record<
       )}
 
       {openTask && <TaskDetail task={openTask} today={today} closeHref={listHref(filter)} />}
+      {addTask}
     </div>
   );
 }
@@ -249,20 +275,43 @@ async function TaskDetail({ task, today, closeHref }: { task: Task; today: strin
     start: d("start"),
     tomorrow: d("tomorrow"),
     edit: d("edit"),
-    form: {
-      title: f("title"),
-      description: f("description"),
-      dueDate: f("dueDate"),
-      save: f("save"),
-      saving: f("saving"),
-      cancel: f("cancel"),
-      saveFailed: f("saveFailed"),
-      errors: { required: f("errors.required"), invalidDate: f("errors.invalidDate") },
+    form: formLabels(f),
+  };
+  return <TaskDetailDialog task={view} closeHref={hrefString(closeHref)} labels={labels} />;
+}
+
+/** Labels of the add form (US-2.2): the correct form's labels plus the category. */
+async function AddTask({ closeHref }: { closeHref: ReturnType<typeof listHref> }) {
+  const t = await getTranslations("Tasks");
+  const f = await getTranslations("Form");
+  const labels: TaskFormLabels = {
+    ...formLabels(f),
+    category: {
+      label: f("category"),
+      none: f("noCategory"),
+      options: { perso: t("filters.perso"), pro: t("filters.pro") },
     },
   };
-  // A URL object is not serializable for a client component: pass the query string.
-  const query = new URLSearchParams(closeHref.query).toString();
-  return <TaskDetailDialog task={view} closeHref={query ? `/?${query}` : "/"} labels={labels} />;
+  return <AddTaskDialog heading={t("add.heading")} close={f("close")} closeHref={hrefString(closeHref)} labels={labels} />;
+}
+
+function formLabels(f: Awaited<ReturnType<typeof getTranslations<"Form">>>): TaskFormLabels {
+  return {
+    title: f("title"),
+    description: f("description"),
+    dueDate: f("dueDate"),
+    save: f("save"),
+    saving: f("saving"),
+    cancel: f("cancel"),
+    saveFailed: f("saveFailed"),
+    errors: { required: f("errors.required"), invalidDate: f("errors.invalidDate") },
+  };
+}
+
+/** A URL object is not serializable for a client component: pass a plain string. */
+function hrefString(href: ReturnType<typeof listHref>): string {
+  const query = new URLSearchParams(href.query).toString();
+  return query ? `/?${query}` : "/";
 }
 
 const ORIGIN_KEY = { "claude-code": "assistant", manual: "manual", mail: "mail" } as const;

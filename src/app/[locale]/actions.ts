@@ -2,7 +2,7 @@
 
 import { refresh } from "next/cache";
 import { addDays, APP_TIME_ZONE, todayIn } from "@/core/due-groups";
-import { TASK_STATUSES, type TaskStatus } from "@/core/task";
+import { isTaskCategory, TASK_STATUSES, type TaskStatus } from "@/core/task";
 import type { TaskChanges } from "@/core/task-file";
 import { hasFieldErrors, validateTaskFields, type TaskFieldErrors } from "@/core/task-validation";
 import { getTaskRepository } from "@/lib/tasks";
@@ -38,7 +38,7 @@ export interface TaskFormState {
   status: "idle" | "saved" | "error";
   errors?: TaskFieldErrors;
   /** What the user typed, so a refused form keeps its values. */
-  values?: { title: string; description: string; dueDate: string };
+  values?: { title: string; description: string; dueDate: string; category?: string };
   /** Changes on each successful save, so the form knows it can switch back to the detail. */
   savedAt?: number;
 }
@@ -58,6 +58,30 @@ export async function updateTaskFields(id: string, _previous: TaskFormState, for
 
   const result = await applyChange(id, values);
   return result.ok ? { status: "saved", savedAt: Date.now() } : { status: "error", values };
+}
+
+/**
+ * Adds a task typed by hand in the app (US-2.2): status "todo", source "manual".
+ * Category is optional: "" means none; any other value than perso / pro is refused.
+ */
+export async function createTask(_previous: TaskFormState, formData: FormData): Promise<TaskFormState> {
+  const values = {
+    title: String(formData.get("title") ?? "").trim(),
+    description: String(formData.get("description") ?? "").trim(),
+    dueDate: String(formData.get("dueDate") ?? "").trim(),
+    category: String(formData.get("category") ?? "").trim(),
+  };
+  const errors = validateTaskFields(values);
+  if (hasFieldErrors(errors)) return { status: "error", errors, values };
+  if (values.category && !isTaskCategory(values.category)) return { status: "error", values };
+
+  try {
+    await getTaskRepository().add({ ...values, category: values.category || undefined, source: "manual" });
+  } catch {
+    return { status: "error", values };
+  }
+  refresh();
+  return { status: "saved", savedAt: Date.now() };
 }
 
 /** "Demain": moves the due date to tomorrow, in Paris time (US-2.3). */

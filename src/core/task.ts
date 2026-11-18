@@ -26,6 +26,14 @@ export interface Task {
   category?: string;
 }
 
+/** Categories offered by the add form and the list filters. Other labels written by /tache stay allowed. */
+export const TASK_CATEGORIES = ["perso", "pro"] as const;
+export type TaskCategory = (typeof TASK_CATEGORIES)[number];
+
+export function isTaskCategory(value: string): value is TaskCategory {
+  return (TASK_CATEGORIES as readonly string[]).includes(value);
+}
+
 /** A task being built by the assistant: every field may still be missing. */
 export type TaskDraft = Partial<Pick<Task, "title" | "description" | "dueDate">>;
 

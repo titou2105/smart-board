@@ -36,7 +36,11 @@
     "empty": "Aucune tâche pour l'instant. Ajoutes-en une avec /tache dans Claude Code.",
     "emptyFilter": "Rien à faire ici pour ce filtre.",
     "error": "Impossible de charger tes tâches.",
-    "open": "Ouvrir « {title} »"
+    "open": "Ouvrir « {title} »",
+    "add": {
+      "button": "Ajouter une tâche",
+      "heading": "Nouvelle tâche"
+    }
   },
   "Detail": {
     "close": "Fermer",
@@ -72,6 +76,9 @@
     "errors": {
       "required": "Ce champ est obligatoire.",
       "invalidDate": "Saisis une date valide."
-    }
+    },
+    "category": "Catégorie",
+    "noCategory": "Aucune",
+    "close": "Fermer"
   }
 }

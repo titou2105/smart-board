@@ -225,7 +225,8 @@
       "epic": "E2",
       "title": "Ajouter une tâche à la main",
       "size": "S",
-      "status": "in_progress",
+      "status": "done",
+      "doneAt": "2026-11-18",
       "story": "En tant qu'utilisateur, je veux ajouter une tâche dans l'app sans passer par Claude Code, afin de garder la main quand je n'ai pas le terminal.",
       "criteria": [
         "Un bouton « Ajouter une tâche » est visible au-dessus de la liste.",
