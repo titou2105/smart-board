@@ -58,6 +58,20 @@
       "assistant": "With the assistant (Claude Code)",
       "manual": "By hand",
       "mail": "From an email"
+    },
+    "edit": "Edit"
+  },
+  "Form": {
+    "title": "Title",
+    "description": "Description",
+    "dueDate": "Due date",
+    "save": "Save",
+    "saving": "Saving…",
+    "cancel": "Cancel",
+    "saveFailed": "The task couldn't be saved. Try again.",
+    "errors": {
+      "required": "This field is required.",
+      "invalidDate": "Enter a valid date."
     }
   }
 }

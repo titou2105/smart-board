@@ -223,11 +223,13 @@ export async function TaskList({ searchParams }: { searchParams: Promise<Record<
 async function TaskDetail({ task, today, closeHref }: { task: Task; today: string; closeHref: ReturnType<typeof listHref> }) {
   const t = await getTranslations("Tasks");
   const d = await getTranslations("Detail");
+  const f = await getTranslations("Form");
   const format = await getFormatter();
   const view: TaskDetailView = {
     id: task.id,
     title: task.title,
     description: task.description,
+    dueDate: task.dueDate,
     status: task.status,
     dueLong: format.dateTime(new Date(task.dueDate + "T00:00:00Z"), { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" }),
     overdue: task.status !== "done" && task.dueDate < today,
@@ -246,6 +248,17 @@ async function TaskDetail({ task, today, closeHref }: { task: Task; today: strin
     reopen: d("reopen"),
     start: d("start"),
     tomorrow: d("tomorrow"),
+    edit: d("edit"),
+    form: {
+      title: f("title"),
+      description: f("description"),
+      dueDate: f("dueDate"),
+      save: f("save"),
+      saving: f("saving"),
+      cancel: f("cancel"),
+      saveFailed: f("saveFailed"),
+      errors: { required: f("errors.required"), invalidDate: f("errors.invalidDate") },
+    },
   };
   // A URL object is not serializable for a client component: pass the query string.
   const query = new URLSearchParams(closeHref.query).toString();

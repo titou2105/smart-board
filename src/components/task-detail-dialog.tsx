@@ -1,8 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useTransition } from "react";
-import { postponeToTomorrow, setTaskStatus } from "@/app/[locale]/actions";
+import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
+import { postponeToTomorrow, setTaskStatus, updateTaskFields } from "@/app/[locale]/actions";
+import { TaskForm, type TaskFormLabels } from "@/components/task-form";
 import type { TaskStatus } from "@/core/task";
 import { cn } from "@/lib/utils";
 
@@ -11,6 +12,8 @@ export interface TaskDetailView {
   id: string;
   title: string;
   description: string;
+  /** YYYY-MM-DD, for the edit form (US-2.6). */
+  dueDate: string;
   status: TaskStatus;
   dueLong: string;
   overdue: boolean;
@@ -30,6 +33,8 @@ export interface TaskDetailLabels {
   reopen: string;
   start: string;
   tomorrow: string;
+  edit: string;
+  form: TaskFormLabels;
 }
 
 const BUTTON = "inline-flex min-h-11 items-center rounded-md px-4 font-semibold disabled:opacity-60";
@@ -43,6 +48,11 @@ export function TaskDetailDialog({ task, closeHref, labels }: { task: TaskDetail
   const dialogRef = useRef<HTMLDialogElement>(null);
   const router = useRouter();
   const [pending, startTransition] = useTransition();
+  // "Modifier" swaps the detail for the form (US-2.6); saving or cancelling swaps back.
+  const [editing, setEditing] = useState(false);
+  const stopEditing = useCallback(() => setEditing(false), []);
+  // The server action receives the task id first, then the form state and data.
+  const saveFields = useMemo(() => updateTaskFields.bind(null, task.id), [task.id]);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -87,6 +97,16 @@ export function TaskDetailDialog({ task, closeHref, labels }: { task: TaskDetail
           </button>
         </div>
 
+        {editing ? (
+          <TaskForm
+            action={saveFields}
+            initial={{ title: task.title, description: task.description, dueDate: task.dueDate }}
+            labels={labels.form}
+            onCancel={stopEditing}
+            onSaved={stopEditing}
+          />
+        ) : (
+        <>
         <dl className="flex flex-col gap-3">
           <div>
             <dt className="text-xs font-semibold tracking-[.06em] text-muted-foreground uppercase">{labels.description}</dt>
@@ -135,7 +155,12 @@ export function TaskDetailDialog({ task, closeHref, labels }: { task: TaskDetail
               {labels.tomorrow}
             </button>
           )}
+          <button type="button" disabled={pending} onClick={() => setEditing(true)} className={cn(BUTTON, "bg-secondary")}>
+            {labels.edit}
+          </button>
         </div>
+        </>
+        )}
       </div>
     </dialog>
   );
