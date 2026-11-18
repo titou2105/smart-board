@@ -65,3 +65,22 @@ describe("createFileRepository.update", () => {
     expect((await repository.list())[0].dueDate).toBe("2026-11-20");
   });
 });
+
+describe("createFileRepository.add", () => {
+  it("creates the file with a manual task, todo by default", async () => {
+    const repository = createFileRepository(join(dir, "add.json"));
+    const added = await repository.add({
+      title: "Appeler le garage", description: "Pour la révision", dueDate: "2026-11-25", category: "perso", source: "manual",
+    });
+    expect(added).toMatchObject({ status: "todo", source: "manual", category: "perso" });
+    expect(await repository.list()).toEqual([added]);
+  });
+
+  it("refuses an incomplete task and writes nothing", async () => {
+    const path = join(dir, "add-invalid.json");
+    const repository = createFileRepository(path);
+    await expect(repository.add({ title: "Sans échéance", description: "x", dueDate: "", source: "manual" }))
+      .rejects.toBeInstanceOf(TaskSourceError);
+    expect(await repository.list()).toEqual([]);
+  });
+});
