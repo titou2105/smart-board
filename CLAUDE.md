@@ -53,8 +53,8 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
 
 ## Où on en est
 <!-- Remplacé (pas complété) en fin de session, 5 lignes maximum : date — état actuel — prochaine étape — blocages -->
-2026-11-18 — M1 « Capture via Claude Code » bouclé (5/5 US). M2 en cours : US-2.4, 2.5, 2.3 et 2.6 fusionnées (thème, liste direction A, détail, correction d'une tâche ; 40 tests).
-Prochaine étape : US-2.2 (ajouter une tâche, réutilise `task-form.tsx` + catégorie), puis démo Vercel (US-3.x). Cible M2 : 18 décembre.
+2026-11-18 — M1 bouclé (5/5 US). M2 en cours : US-2.4, 2.5, 2.3, 2.6 fusionnées ; US-2.2 (ajouter une tâche à la main) faite sur sa branche, PR à ouvrir (42 tests).
+Prochaine étape : démo Vercel (US-3.x). Cible M2 : 18 décembre.
 Blocages : Thomas doit recréer `.env.local` dans le projet (le premier a été créé dans `C:\Users\tthiv`).
 
 ## Décisions

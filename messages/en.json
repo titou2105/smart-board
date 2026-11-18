@@ -36,7 +36,11 @@
     "empty": "No task yet. Add one with /tache in Claude Code.",
     "emptyFilter": "Nothing to do here for this filter.",
     "error": "Your tasks couldn't be loaded.",
-    "open": "Open “{title}”"
+    "open": "Open “{title}”",
+    "add": {
+      "button": "Add a task",
+      "heading": "New task"
+    }
   },
   "Detail": {
     "close": "Close",
@@ -72,6 +76,9 @@
     "errors": {
       "required": "This field is required.",
       "invalidDate": "Enter a valid date."
-    }
+    },
+    "category": "Category",
+    "noCategory": "None",
+    "close": "Close"
   }
 }

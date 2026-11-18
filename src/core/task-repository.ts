@@ -1,5 +1,5 @@
 import type { Task } from "./task";
-import type { TaskChanges } from "./task-file";
+import type { NewTaskInput, TaskChanges } from "./task-file";
 
 /**
  * Where tasks are stored. The screens only know this interface; the implementation
@@ -10,6 +10,8 @@ export interface TaskRepository {
   list(): Promise<Task[]>;
   /** Changes one task and returns it updated. Throws a TaskSourceError if the change is refused. */
   update(id: string, changes: TaskChanges): Promise<Task>;
+  /** Creates one task (id, status "todo" and timestamps are filled in). Throws a TaskSourceError if it is incomplete. */
+  add(input: NewTaskInput): Promise<Task>;
 }
 
 /** An error whose message can be shown as-is to the user. */

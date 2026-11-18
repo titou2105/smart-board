@@ -2,6 +2,7 @@
 
 import { useActionState, useEffect, useRef } from "react";
 import type { TaskFormState } from "@/app/[locale]/actions";
+import { TASK_CATEGORIES, type TaskCategory } from "@/core/task";
 import type { FieldError } from "@/core/task-validation";
 import { cn } from "@/lib/utils";
 
@@ -14,12 +15,15 @@ export interface TaskFormLabels {
   cancel: string;
   errors: Record<FieldError, string>;
   saveFailed: string;
+  /** Only the add form shows the category (US-2.2); the correct form leaves it out. */
+  category?: { label: string; none: string; options: Record<TaskCategory, string> };
 }
 
 export interface TaskFormValues {
   title: string;
   description: string;
   dueDate: string;
+  category?: string;
 }
 
 type FormAction = (state: TaskFormState, formData: FormData) => Promise<TaskFormState>;
@@ -56,6 +60,7 @@ export function TaskForm({
   }, [state.status, state.savedAt, onSaved]);
 
   function errorOf(field: keyof TaskFormValues) {
+    if (field === "category") return null; // optional, nothing to correct
     const code = state.errors?.[field];
     return code ? labels.errors[code] : null;
   }
@@ -98,6 +103,18 @@ export function TaskForm({
           className={cn(FIELD, errorOf("dueDate") && "border-destructive")}
         />
       </Field>
+      {labels.category && (
+        <Field name="category" label={labels.category.label} error={null}>
+          <select id="task-category" name="category" defaultValue={values.category ?? ""} className={cn(FIELD, "min-h-11")}>
+            <option value="">{labels.category.none}</option>
+            {TASK_CATEGORIES.map((category) => (
+              <option key={category} value={category}>
+                {labels.category?.options[category]}
+              </option>
+            ))}
+          </select>
+        </Field>
+      )}
 
       {state.status === "error" && !state.errors && (
         <p role="alert" className="text-sm text-destructive">
