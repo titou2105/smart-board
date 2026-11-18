@@ -39,6 +39,12 @@ export interface TaskDetailLabels {
 
 const BUTTON = "inline-flex min-h-11 items-center rounded-md px-4 font-semibold disabled:opacity-60";
 
+/** Sheet from the bottom on a phone, panel on the right on a computer (shared with the add dialog, US-2.2). */
+export const SHEET_CLASS = cn(
+  "m-0 mt-auto max-h-[85dvh] w-full max-w-none overflow-y-auto rounded-t-lg border bg-card p-0 text-foreground shadow-float backdrop:bg-black/40",
+  "sm:mt-0 sm:ml-auto sm:h-dvh sm:max-h-none sm:w-[400px] sm:rounded-none sm:border-y-0 sm:border-r-0",
+);
+
 /**
  * Task detail (US-2.3): a sheet rising from the bottom on a phone, a panel on the right on a computer.
  * Native <dialog>: Escape closes it and keyboard focus stays inside, with no extra library.
@@ -77,10 +83,7 @@ export function TaskDetailDialog({ task, closeHref, labels }: { task: TaskDetail
         if (event.target === dialogRef.current) dialogRef.current?.close(); // click on the dimmed backdrop
       }}
       aria-labelledby="task-detail-title"
-      className={cn(
-        "m-0 mt-auto max-h-[85dvh] w-full max-w-none overflow-y-auto rounded-t-lg border bg-card p-0 text-foreground shadow-float backdrop:bg-black/40",
-        "sm:mt-0 sm:ml-auto sm:h-dvh sm:max-h-none sm:w-[400px] sm:rounded-none sm:border-y-0 sm:border-r-0",
-      )}
+      className={SHEET_CLASS}
     >
       <div className="flex flex-col gap-4 p-4">
         <div className="flex items-start justify-between gap-3">

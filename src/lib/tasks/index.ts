@@ -1,4 +1,4 @@
-import { updateTask } from "@/core/task-file";
+import { addTasks, updateTask } from "@/core/task-file";
 import { TaskSourceError, type TaskRepository } from "@/core/task-repository";
 import { mockTasks } from "@/mocks/tasks";
 import { createFileRepository } from "./file-repository";
@@ -15,6 +15,12 @@ const mockRepository: TaskRepository = {
     if (!result.ok) throw new TaskSourceError("La tâche n'a pas été modifiée.", result.errors);
     mockFile = result.file;
     return result.after;
+  },
+  async add(input) {
+    const result = addTasks(mockFile, [input], new Date());
+    if (!result.ok) throw new TaskSourceError("La tâche n'a pas été ajoutée.", result.errors);
+    mockFile = result.file;
+    return result.added[0];
   },
 };
 
