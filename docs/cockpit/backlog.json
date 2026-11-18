@@ -225,10 +225,14 @@
       "epic": "E2",
       "title": "Ajouter une tâche à la main",
       "size": "S",
-      "status": "todo",
+      "status": "in_progress",
       "story": "En tant qu'utilisateur, je veux ajouter une tâche dans l'app sans passer par Claude Code, afin de garder la main quand je n'ai pas le terminal.",
       "criteria": [
-        "L'enregistrement est refusé tant qu'un champ obligatoire est vide, avec un message clair."
+        "Un bouton « Ajouter une tâche » est visible au-dessus de la liste.",
+        "Le formulaire demande titre, description et échéance (obligatoires), et une catégorie facultative : perso, pro ou aucune.",
+        "L'enregistrement est refusé tant qu'un champ obligatoire est vide, avec un message clair.",
+        "Une fois enregistrée, la tâche apparaît tout de suite dans le bon groupe d'échéance, avec le statut « à faire ».",
+        "Ça marche en mode mock (démo) comme en mode file (vraies tâches)."
       ]
     },
     {
