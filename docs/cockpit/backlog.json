@@ -303,7 +303,7 @@
       "epic": "E3",
       "title": "Démo publique",
       "size": "S",
-      "status": "todo",
+      "status": "in_progress",
       "story": "En tant que recruteur, je veux ouvrir la démo depuis un lien, afin de tester l'app sans rien installer.",
       "criteria": [
         "L'app est en ligne sur Vercel (offre gratuite), sur des données fictives.",
