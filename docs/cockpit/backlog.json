@@ -3,7 +3,7 @@
   "project": {
     "name": "Smart Board",
     "tagline": "« Dis-le, c'est rangé. » Une to-do où l'assistant te pose les questions qui manquent.",
-    "updatedAt": "2026-11-18"
+    "updatedAt": "2026-11-19"
   },
   "milestones": [
     {
@@ -303,12 +303,14 @@
       "epic": "E3",
       "title": "Démo publique",
       "size": "S",
-      "status": "todo",
+      "status": "done",
       "story": "En tant que recruteur, je veux ouvrir la démo depuis un lien, afin de tester l'app sans rien installer.",
       "criteria": [
         "L'app est en ligne sur Vercel (offre gratuite), sur des données fictives.",
         "Chaque push sur main met à jour la démo automatiquement."
-      ]
+      ],
+      "note": "Démo : https://smart-board-puce.vercel.app (compte Vercel Hobby titou2105, app GitHub Vercel limitée au dépôt smart-board). Aucune variable d'environnement : DATA_PROVIDER=mock par défaut. Les changements faits sur la démo restent en mémoire du serveur jusqu'à l'US-3.2.",
+      "doneAt": "2026-11-19"
     },
     {
       "id": "US-3.2",
@@ -640,24 +642,20 @@
     },
     {
       "id": "D15",
-      "status": "open",
+      "status": "decided",
+      "date": "2026-11-23",
       "question": "Horizon : accepter fin février, ou appliquer le plan B ?",
-      "options": [
-        "Accepter la fin février",
-        "Plan B : reporter les mails (E8) après l'horizon et finir sur la boîte de réception"
-      ],
+      "decision": "On accepte l'horizon fin février 2027 (mails E8 inclus).",
       "related": [
         "E8"
       ]
     },
     {
       "id": "D16",
-      "status": "open",
+      "status": "decided",
+      "date": "2026-11-23",
       "question": "Quel fournisseur de mail perso ? Les API diffèrent.",
-      "options": [
-        "Gmail",
-        "Outlook"
-      ],
+      "decision": "Yahoo et Gmail : deux implémentations derrière la même interface de lecture des mails.",
       "related": [
         "US-8.1"
       ]
