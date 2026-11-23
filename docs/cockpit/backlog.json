@@ -642,24 +642,20 @@
     },
     {
       "id": "D15",
-      "status": "open",
+      "status": "decided",
+      "date": "2026-11-23",
       "question": "Horizon : accepter fin février, ou appliquer le plan B ?",
-      "options": [
-        "Accepter la fin février",
-        "Plan B : reporter les mails (E8) après l'horizon et finir sur la boîte de réception"
-      ],
+      "decision": "On accepte l'horizon fin février 2027 (mails E8 inclus).",
       "related": [
         "E8"
       ]
     },
     {
       "id": "D16",
-      "status": "open",
+      "status": "decided",
+      "date": "2026-11-23",
       "question": "Quel fournisseur de mail perso ? Les API diffèrent.",
-      "options": [
-        "Gmail",
-        "Outlook"
-      ],
+      "decision": "Yahoo et Gmail : deux implémentations derrière la même interface de lecture des mails.",
       "related": [
         "US-8.1"
       ]
