@@ -53,9 +53,10 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
 
 ## Où on en est
 <!-- Remplacé (pas complété) en fin de session, 5 lignes maximum : date — état actuel — prochaine étape — blocages -->
-2026-11-19 — M1 bouclé (5/5 US). M2 en cours : E2 bouclé ; US-3.1 faite, démo en ligne : https://smart-board-puce.vercel.app
+2026-11-23 — M1 bouclé (5/5 US). M2 en cours : E2 bouclé ; US-3.1 livrée (PR #12), démo : https://smart-board-puce.vercel.app
+D15 (horizon fin février) et D16 (mails Yahoo + Gmail) tranchées ; US-8.1 à découper (Gmail / Yahoo).
 Prochaine étape : US-3.2 (données de démo par navigateur), puis US-3.3 (README). Cible M2 : 18 décembre.
-Blocages : Thomas doit recréer `.env.local` dans le projet (le premier a été créé dans `C:\Users\tthiv`).
+Blocages : aucun (`.env.local` recréé dans le projet).
 
 ## Décisions
 Dans `docs/decisions.md` (lu à la demande). Les décisions produit vont dans le backlog.
