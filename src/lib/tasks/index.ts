@@ -1,39 +1,46 @@
-import { addTasks, updateTask } from "@/core/task-file";
-import { TaskSourceError, type TaskRepository } from "@/core/task-repository";
-import { mockTasks } from "@/mocks/tasks";
+import { cookies } from "next/headers";
+import { APP_TIME_ZONE, todayIn } from "@/core/due-groups";
+import type { TaskRepository } from "@/core/task-repository";
+import { DEMO_COOKIE, DEMO_COOKIE_MAX_AGE_SECONDS } from "./demo-cookie";
+import { createDemoRepository, type DemoCookieJar } from "./demo-repository";
 import { createFileRepository } from "./file-repository";
 
-// Demo mode keeps changes in server memory only (lost on restart). Per-visitor demo data comes with US-3.2.
-let mockFile = { schemaVersion: 1, tasks: structuredClone(mockTasks) };
-
-const mockRepository: TaskRepository = {
-  async list() {
-    return mockFile.tasks;
+/** The real browser cookie behind the demo. Writing only works in Server Actions (the page itself only reads). */
+const browserCookieJar: DemoCookieJar = {
+  async read() {
+    return (await cookies()).get(DEMO_COOKIE)?.value;
   },
-  async update(id, changes) {
-    const result = updateTask(mockFile, id, changes, new Date());
-    if (!result.ok) throw new TaskSourceError("La tâche n'a pas été modifiée.", result.errors);
-    mockFile = result.file;
-    return result.after;
-  },
-  async add(input) {
-    const result = addTasks(mockFile, [input], new Date());
-    if (!result.ok) throw new TaskSourceError("La tâche n'a pas été ajoutée.", result.errors);
-    mockFile = result.file;
-    return result.added[0];
+  async write(value) {
+    (await cookies()).set(DEMO_COOKIE, value, {
+      httpOnly: true, // page scripts cannot read it: only this app's server does
+      sameSite: "lax", // never sent along with requests from other sites
+      secure: process.env.NODE_ENV === "production", // HTTPS only online (localhost runs on plain HTTP)
+      maxAge: DEMO_COOKIE_MAX_AGE_SECONDS,
+      path: "/",
+    });
   },
 };
 
+/** True for the online demo (and local mock mode): sample tasks, a "Réinitialiser" button, the cookie notice. */
+export function isDemoMode(): boolean {
+  return (process.env.DATA_PROVIDER ?? "mock") === "mock";
+}
+
+/** "Réinitialiser": forgets the visitor's changes, so the sample list (dated today) comes back. */
+export async function resetDemoTasks(): Promise<void> {
+  (await cookies()).delete(DEMO_COOKIE);
+}
+
 /**
  * Picks where tasks come from with DATA_PROVIDER (mock by default, so the app works with no setup):
- * - mock: realistic sample tasks (online demo);
+ * - mock: realistic sample tasks, each visitor's changes kept in their own browser (online demo);
  * - file: Thomas's real tasks in data/tasks.json (TASKS_FILE to use another path).
  */
 export function getTaskRepository(): TaskRepository {
   const provider = process.env.DATA_PROVIDER ?? "mock";
   switch (provider) {
     case "mock":
-      return mockRepository;
+      return createDemoRepository(browserCookieJar, () => todayIn(APP_TIME_ZONE));
     case "file":
       return createFileRepository(process.env.TASKS_FILE ?? "data/tasks.json");
     default:

@@ -73,6 +73,7 @@
     "saving": "Saving…",
     "cancel": "Cancel",
     "saveFailed": "The task couldn't be saved. Try again.",
+    "demoFull": "The demo is full. Reset it (below the list) to keep going.",
     "errors": {
       "required": "This field is required.",
       "invalidDate": "Enter a valid date."
@@ -80,5 +81,11 @@
     "category": "Category",
     "noCategory": "None",
     "close": "Close"
+  },
+  "Demo": {
+    "notice": "Demo: these tasks are made up. Your changes stay in this browser, in a functional cookie (no tracking, deleted after 30 days without a visit).",
+    "reset": "Reset",
+    "resetting": "Resetting…",
+    "confirm": "Erase your changes and go back to the sample list?"
   }
 }

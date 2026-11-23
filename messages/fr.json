@@ -73,6 +73,7 @@
     "saving": "Enregistrement…",
     "cancel": "Annuler",
     "saveFailed": "La tâche n'a pas pu être enregistrée. Réessaie.",
+    "demoFull": "La démo est pleine. Réinitialise-la (en bas de la liste) pour continuer.",
     "errors": {
       "required": "Ce champ est obligatoire.",
       "invalidDate": "Saisis une date valide."
@@ -80,5 +81,11 @@
     "category": "Catégorie",
     "noCategory": "Aucune",
     "close": "Fermer"
+  },
+  "Demo": {
+    "notice": "Démo : ces tâches sont fictives. Tes changements restent dans ce navigateur, grâce à un cookie fonctionnel (aucun pistage, effacé après 30 jours sans visite).",
+    "reset": "Réinitialiser",
+    "resetting": "Réinitialisation…",
+    "confirm": "Effacer tes changements et revenir à la liste d'exemple ?"
   }
 }

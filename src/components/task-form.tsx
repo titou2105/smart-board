@@ -15,6 +15,8 @@ export interface TaskFormLabels {
   cancel: string;
   errors: Record<FieldError, string>;
   saveFailed: string;
+  /** Online demo only (US-3.2): shown instead of saveFailed when the visitor's demo is full. */
+  demoFull: string;
   /** Only the add form shows the category (US-2.2); the correct form leaves it out. */
   category?: { label: string; none: string; options: Record<TaskCategory, string> };
 }
@@ -118,7 +120,7 @@ export function TaskForm({
 
       {state.status === "error" && !state.errors && (
         <p role="alert" className="text-sm text-destructive">
-          {labels.saveFailed}
+          {state.demoFull ? labels.demoFull : labels.saveFailed}
         </p>
       )}
 
