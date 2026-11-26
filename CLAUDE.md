@@ -26,8 +26,8 @@ l'assistant pose les questions qui manquent (titre, description, échéance) et 
 ## Structure
 - `src/core/` — logique métier **pure** (aucun import React/Next) : type `Task`, champs obligatoires,
   `findMissingFields`, interface `TaskAssistant`. Réutilisable telle quelle par la future app mobile.
-- `src/lib/tasks/` — implémentations de `TaskRepository` (`file`, `mock`) ; `getTaskRepository()` choisit selon
-  `DATA_PROVIDER`. `src/components/task-list.tsx` — vue par échéance (provisoire).
+- `src/lib/tasks/` — implémentations de `TaskRepository` (`file`, et `demo` : cookie du visiteur) ; `getTaskRepository()`
+  choisit selon `DATA_PROVIDER`. `src/components/task-list.tsx` — vue par échéance (provisoire).
 - `src/lib/assistant/` — implémentations de l'assistant (`mock`, plus tard `claude`) ; `getTaskAssistant()`
   choisit selon `LLM_PROVIDER`. Côté serveur uniquement.
 - `src/mocks/` — données fictives réalistes (`tasks.ts` : tableau d'exemple).
@@ -53,9 +53,10 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
 
 ## Où on en est
 <!-- Remplacé (pas complété) en fin de session, 5 lignes maximum : date — état actuel — prochaine étape — blocages -->
-2026-11-19 — M1 bouclé (5/5 US). M2 en cours : E2 bouclé ; US-3.1 faite, démo en ligne : https://smart-board-puce.vercel.app
-Prochaine étape : US-3.2 (données de démo par navigateur), puis US-3.3 (README). Cible M2 : 18 décembre.
-Blocages : Thomas doit recréer `.env.local` dans le projet (le premier a été créé dans `C:\Users\tthiv`).
+2026-11-26 — M2 en cours (8/9 US) : US-3.2 faite sur la branche `us-3.2-donnees-demo` (démo par visiteur dans un cookie, bouton Réinitialiser), PR à ouvrir.
+Démo : https://smart-board-puce.vercel.app · US-8.1 à découper (Gmail / Yahoo).
+Prochaine étape : US-3.3 (README, dépôt public). Cible M2 : 18 décembre.
+Blocages : aucun.
 
 ## Décisions
 Dans `docs/decisions.md` (lu à la demande). Les décisions produit vont dans le backlog.

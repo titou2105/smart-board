@@ -16,7 +16,8 @@ import {
   type CategoryFilter,
   type WeekSummary,
 } from "@/core/week-summary";
-import { getTaskRepository } from "@/lib/tasks";
+import { DemoBar, type DemoBarLabels } from "@/components/demo-bar";
+import { getTaskRepository, isDemoMode } from "@/lib/tasks";
 import { cn } from "@/lib/utils";
 
 // "My tasks" list, direction A of the UI workshop (US-2.5). Design rules: docs/design.md.
@@ -191,6 +192,7 @@ export async function TaskList({ searchParams }: { searchParams: Promise<Record<
       <div className="flex flex-col gap-4">
         <AddTaskLink filter={filter} t={t} />
         <p className="rounded-lg border border-dashed p-6 text-center text-muted-foreground">{t("empty")}</p>
+        <Demo />
         {addTask}
       </div>
     );
@@ -239,6 +241,7 @@ export async function TaskList({ searchParams }: { searchParams: Promise<Record<
         </details>
       )}
 
+      <Demo />
       {openTask && <TaskDetail task={openTask} today={today} closeHref={listHref(filter)} />}
       {addTask}
     </div>
@@ -280,6 +283,14 @@ async function TaskDetail({ task, today, closeHref }: { task: Task; today: strin
   return <TaskDetailDialog task={view} closeHref={hrefString(closeHref)} labels={labels} />;
 }
 
+/** Cookie notice and "Réinitialiser" button, on the online demo only (US-3.2). */
+async function Demo() {
+  if (!isDemoMode()) return null;
+  const d = await getTranslations("Demo");
+  const labels: DemoBarLabels = { notice: d("notice"), reset: d("reset"), resetting: d("resetting"), confirm: d("confirm") };
+  return <DemoBar labels={labels} />;
+}
+
 /** Labels of the add form (US-2.2): the correct form's labels plus the category. */
 async function AddTask({ closeHref }: { closeHref: ReturnType<typeof listHref> }) {
   const t = await getTranslations("Tasks");
@@ -304,6 +315,7 @@ function formLabels(f: Awaited<ReturnType<typeof getTranslations<"Form">>>): Tas
     saving: f("saving"),
     cancel: f("cancel"),
     saveFailed: f("saveFailed"),
+    demoFull: f("demoFull"),
     errors: { required: f("errors.required"), invalidDate: f("errors.invalidDate") },
   };
 }
