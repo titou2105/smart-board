@@ -1,4 +1,7 @@
 import { cookies } from "next/headers";
+import { hasLocale } from "next-intl";
+import { getLocale } from "next-intl/server";
+import { routing, type Locale } from "@/i18n/routing";
 import { APP_TIME_ZONE, todayIn } from "@/core/due-groups";
 import type { TaskRepository } from "@/core/task-repository";
 import { DEMO_COOKIE, DEMO_COOKIE_MAX_AGE_SECONDS } from "./demo-cookie";
@@ -21,6 +24,12 @@ const browserCookieJar: DemoCookieJar = {
   },
 };
 
+/** The interface language of the current request (picked by the proxy), so the sample tasks match it. */
+async function visitorLocale(): Promise<Locale> {
+  const locale = await getLocale();
+  return hasLocale(routing.locales, locale) ? locale : routing.defaultLocale;
+}
+
 /** True for the online demo (and local mock mode): sample tasks, a "Réinitialiser" button, the cookie notice. */
 export function isDemoMode(): boolean {
   return (process.env.DATA_PROVIDER ?? "mock") === "mock";
@@ -40,7 +49,7 @@ export function getTaskRepository(): TaskRepository {
   const provider = process.env.DATA_PROVIDER ?? "mock";
   switch (provider) {
     case "mock":
-      return createDemoRepository(browserCookieJar, () => todayIn(APP_TIME_ZONE));
+      return createDemoRepository(browserCookieJar, () => todayIn(APP_TIME_ZONE), visitorLocale);
     case "file":
       return createFileRepository(process.env.TASKS_FILE ?? "data/tasks.json");
     default:

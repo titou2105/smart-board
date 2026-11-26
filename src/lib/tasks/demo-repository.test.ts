@@ -23,18 +23,34 @@ const newTask = { title: "Acheter du pain", description: "Une baguette", dueDate
 
 describe("buildSampleTasks", () => {
   it("fills every due group around the visit day", () => {
-    const groups = groupByDueDate(buildSampleTasks(TODAY), TODAY);
+    const groups = groupByDueDate(buildSampleTasks(TODAY, "en"), TODAY);
     expect(groups.overdue).not.toHaveLength(0);
     expect(groups.today).not.toHaveLength(0);
     expect(groups.next7Days).not.toHaveLength(0);
     expect(groups.later).not.toHaveLength(0);
     expect(groups.done).not.toHaveLength(0);
   });
+
+  it("writes the same tasks in English and in French", () => {
+    const english = buildSampleTasks(TODAY, "en");
+    const french = buildSampleTasks(TODAY, "fr");
+    expect(english[0].title).toBe("Call the plumber");
+    expect(french[0].title).toBe("Appeler le plombier");
+    // Only the words change: same ids, dates, statuses and categories.
+    const withoutWords = (tasks: typeof english) =>
+      tasks.map((task) => ({ ...task, title: undefined, description: undefined }));
+    expect(withoutWords(french)).toEqual(withoutWords(english));
+  });
+
+  it("reveals nothing personal (the demo is public)", () => {
+    const allText = JSON.stringify([buildSampleTasks(TODAY, "en"), buildSampleTasks(TODAY, "fr")]);
+    expect(allText).not.toMatch(/canada|CV|resume/i);
+  });
 });
 
 describe("demo cookie", () => {
   it("reads back what it wrote", () => {
-    const file = { schemaVersion: 1, tasks: buildSampleTasks(TODAY) };
+    const file = { schemaVersion: 1, tasks: buildSampleTasks(TODAY, "en") };
     expect(decodeDemoTasks(encodeDemoTasks(file))).toEqual(file);
   });
 
@@ -44,46 +60,58 @@ describe("demo cookie", () => {
   });
 
   it("keeps the sample list well under the cookie size limit", () => {
-    const value = encodeDemoTasks({ schemaVersion: 1, tasks: buildSampleTasks(TODAY) });
+    const value = encodeDemoTasks({ schemaVersion: 1, tasks: buildSampleTasks(TODAY, "en") });
     expect(value.length).toBeLessThan(DEMO_COOKIE_MAX_LENGTH / 2);
   });
 });
 
 describe("createDemoRepository", () => {
   it("shows the sample list to a new visitor", async () => {
-    const repository = createDemoRepository(fakeJar(), () => TODAY);
-    expect(await repository.list()).toEqual(buildSampleTasks(TODAY));
+    const repository = createDemoRepository(fakeJar(), () => TODAY, () => "en");
+    expect(await repository.list()).toEqual(buildSampleTasks(TODAY, "en"));
   });
 
   it("keeps each visitor's changes in their own browser", async () => {
-    const alice = createDemoRepository(fakeJar(), () => TODAY);
-    const bob = createDemoRepository(fakeJar(), () => TODAY);
+    const alice = createDemoRepository(fakeJar(), () => TODAY, () => "en");
+    const bob = createDemoRepository(fakeJar(), () => TODAY, () => "en");
     await alice.update("t1", { status: "done" });
     await alice.add(newTask);
 
     const aliceTasks = await alice.list();
     expect(aliceTasks.find((task) => task.id === "t1")?.status).toBe("done");
     expect(aliceTasks.some((task) => task.title === "Acheter du pain")).toBe(true);
-    expect(await bob.list()).toEqual(buildSampleTasks(TODAY));
+    expect(await bob.list()).toEqual(buildSampleTasks(TODAY, "en"));
   });
 
   it("starts over from the sample list once the cookie is gone", async () => {
     const jar = fakeJar();
-    const repository = createDemoRepository(jar, () => TODAY);
+    const repository = createDemoRepository(jar, () => TODAY, () => "en");
     await repository.add(newTask);
     jar.value = undefined; // what "Réinitialiser" does
-    expect(await repository.list()).toEqual(buildSampleTasks(TODAY));
+    expect(await repository.list()).toEqual(buildSampleTasks(TODAY, "en"));
+  });
+
+  it("shows the sample list in the visitor's language", async () => {
+    const repository = createDemoRepository(fakeJar(), () => TODAY, () => "fr");
+    expect(await repository.list()).toEqual(buildSampleTasks(TODAY, "fr"));
+  });
+
+  it("keeps a visitor's saved tasks in their language when the interface language changes", async () => {
+    const jar = fakeJar();
+    await createDemoRepository(jar, () => TODAY, () => "fr").update("t1", { status: "in_progress" });
+    const later = await createDemoRepository(jar, () => TODAY, () => "en").list();
+    expect(later.find((task) => task.id === "t1")?.title).toBe("Appeler le plombier");
   });
 
   it(`refuses a new task once the demo holds ${DEMO_MAX_TASKS} tasks`, async () => {
-    const repository = createDemoRepository(fakeJar(), () => TODAY);
+    const repository = createDemoRepository(fakeJar(), () => TODAY, () => "en");
     while ((await repository.list()).length < DEMO_MAX_TASKS) await repository.add(newTask);
     await expect(repository.add(newTask)).rejects.toBeInstanceOf(DemoFullError);
   });
 
   it("refuses a change that would not fit in the cookie", async () => {
     const jar = fakeJar();
-    const repository = createDemoRepository(jar, () => TODAY);
+    const repository = createDemoRepository(jar, () => TODAY, () => "en");
     const random = Array.from({ length: 6000 }, () => String.fromCharCode(33 + Math.floor(Math.random() * 90))).join("");
     await expect(repository.update("t1", { description: random })).rejects.toBeInstanceOf(DemoFullError);
     expect(jar.value).toBeUndefined(); // nothing was written
