@@ -3,7 +3,7 @@
   "project": {
     "name": "Smart Board",
     "tagline": "« Dis-le, c'est rangé. » Une to-do où l'assistant te pose les questions qui manquent.",
-    "updatedAt": "2026-11-23"
+    "updatedAt": "2026-11-26"
   },
   "milestones": [
     {
@@ -317,7 +317,8 @@
       "epic": "E3",
       "title": "Données de démo",
       "size": "S",
-      "status": "in_progress",
+      "status": "done",
+      "doneAt": "2026-11-26",
       "story": "En tant que visiteur, je veux une liste d'exemple et un bouton « Réinitialiser », afin de tester sans craindre de tout casser.",
       "criteria": [
         "Chaque visiteur a sa propre liste (dans son navigateur) : deux navigateurs ne voient pas les changements l'un de l'autre.",

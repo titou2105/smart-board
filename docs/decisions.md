@@ -46,3 +46,8 @@
 - 2026-11-19 — Démo hébergée sur Vercel (offre Hobby, gratuite), projet `smart-board` relié au dépôt GitHub :
   chaque push sur `main` redéploie la production, chaque branche a son aperçu. Aucune variable d'environnement
   (mock par défaut). L'app GitHub Vercel n'a accès qu'à ce dépôt. URL : https://smart-board-puce.vercel.app
+- 2026-11-26 — Démo par visiteur (US-3.2) : tâches dans un cookie `httpOnly` compressé (deflate + base64url),
+  plafonné à 25 tâches et environ 3,8 Ko, durée de vie 30 jours. Pas de bandeau de consentement : cookie propriétaire,
+  sans pistage, strictement nécessaire au service demandé (comme un panier d'achat), donc exempté selon la CNIL ;
+  une ligne l'explique sous la démo. Pourquoi un cookie plutôt que `localStorage` : l'affichage est fait côté serveur,
+  les écrans ne changent pas. Liste d'exemple datée par rapport au jour de la visite, pour que la démo ne vieillisse pas.
