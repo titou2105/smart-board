@@ -53,9 +53,8 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
 
 ## Où on en est
 <!-- Remplacé (pas complété) en fin de session, 5 lignes maximum : date — état actuel — prochaine étape — blocages -->
-2026-11-26 — M2 complet (10/10 US) : US-3.4 (démo dans la langue du visiteur, sans info perso) faite sur la branche `us-3.4-demo-langue-visiteur`.
-Démo : https://smart-board-puce.vercel.app · US-8.1 à découper (Gmail / Yahoo).
-Prochaine étape : passer le dépôt en public (historique audité, e-mail d'auteur accepté), puis M3.
+2026-11-26 — M1 et M2 livrés (15/30 US), 3 semaines d'avance. Dépôt public, démo : https://smart-board-puce.vercel.app
+Prochaine étape : M3, en commençant par US-4.1 (supprimer une tâche). À découper avant de les commencer : US-6.1, US-8.1, US-8.2.
 Blocages : aucun.
 
 ## Décisions
@@ -63,7 +62,7 @@ Dans `docs/decisions.md` (lu à la demande). Les décisions produit vont dans le
 
 ## Feuille de route
 - Détail : `docs/product.md` et le cockpit (`docs/cockpit/index.html`).
-- [ ] M1 — Capture via Claude Code (E1) — cible 30 novembre 2026
-- [ ] M2 — App utilisable et en ligne (E2, E3) — cible 18 décembre 2026
+- [x] M1 — Capture via Claude Code (E1) — cible 30 novembre 2026
+- [x] M2 — App utilisable et en ligne (E2, E3) — cible 18 décembre 2026 (livré le 26 novembre)
 - [ ] M3 — Partout, avec l'assistant (E4, E5, E6) — cible 7 février 2027
 - [ ] M4 — Premières intégrations (E7, E8) — cible 28 février 2027
