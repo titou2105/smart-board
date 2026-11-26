@@ -334,7 +334,7 @@
       "epic": "E3",
       "title": "README portfolio",
       "size": "M",
-      "status": "todo",
+      "status": "in_progress",
       "story": "En tant que recruteur, je veux comprendre le projet en 1 minute depuis GitHub, afin d'évaluer le travail de Thomas.",
       "criteria": [
         "README en anglais avec pitch, lien de démo, captures ou GIF, stack, lancement en local.",
