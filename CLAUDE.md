@@ -53,9 +53,9 @@ Voir `.env.example`. Copier en `.env.local`. Ne jamais commiter `.env.local`.
 
 ## Où on en est
 <!-- Remplacé (pas complété) en fin de session, 5 lignes maximum : date — état actuel — prochaine étape — blocages -->
-2026-11-26 — M2 complet (9/9 US) : US-3.3 (README anglais + captures) faite sur la branche `us-3.3-readme-portfolio`, PR à ouvrir.
+2026-11-26 — M2 complet (10/10 US) : US-3.4 (démo dans la langue du visiteur, sans info perso) faite sur la branche `us-3.4-demo-langue-visiteur`.
 Démo : https://smart-board-puce.vercel.app · US-8.1 à découper (Gmail / Yahoo).
-Prochaine étape : passer le dépôt en public (après revue de l'historique), trancher D23 (démo en anglais ?), puis M3.
+Prochaine étape : passer le dépôt en public (historique audité, e-mail d'auteur accepté), puis M3.
 Blocages : aucun.
 
 ## Décisions

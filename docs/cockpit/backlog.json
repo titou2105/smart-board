@@ -343,6 +343,20 @@
       ]
     },
     {
+      "id": "US-3.4",
+      "epic": "E3",
+      "title": "Démo dans la langue du visiteur",
+      "size": "S",
+      "status": "done",
+      "doneAt": "2026-11-26",
+      "story": "En tant que recruteur anglophone, je veux voir des tâches d'exemple en anglais, afin de comprendre la démo sans parler français.",
+      "criteria": [
+        "Les tâches d'exemple s'affichent dans la langue de l'interface (anglais ou français), pour un nouveau visiteur comme après « Réinitialiser ».",
+        "Les tâches que le visiteur a déjà modifiées ne changent pas de langue (elles sont à lui).",
+        "Aucune tâche d'exemple ne dévoile d'information personnelle (projet de mobilité)."
+      ]
+    },
+    {
       "id": "US-4.1",
       "epic": "E4",
       "title": "Supprimer une tâche",
@@ -731,11 +745,14 @@
     },
     {
       "id": "D23",
-      "status": "open",
+      "status": "decided",
+      "date": "2026-11-26",
       "question": "Les tâches de démo sont en français même quand l'interface est en anglais : faut-il les traduire selon la langue du visiteur (recruteurs anglophones) ?",
+      "decision": "Oui : les tâches d'exemple suivent la langue de l'interface (US-3.4).",
       "related": [
         "US-3.2",
-        "US-3.3"
+        "US-3.3",
+        "US-3.4"
       ]
     }
   ],

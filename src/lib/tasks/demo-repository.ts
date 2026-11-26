@@ -1,5 +1,6 @@
 import { addTasks, CURRENT_SCHEMA_VERSION, updateTask, type TaskFile } from "@/core/task-file";
 import { TaskSourceError, type TaskRepository } from "@/core/task-repository";
+import type { Locale } from "@/i18n/routing";
 import { buildSampleTasks } from "@/mocks/tasks";
 import { decodeDemoTasks, DEMO_COOKIE_MAX_LENGTH, DEMO_MAX_TASKS, encodeDemoTasks } from "./demo-cookie";
 
@@ -19,11 +20,17 @@ export class DemoFullError extends TaskSourceError {
 
 /**
  * Demo repository (DATA_PROVIDER=mock): the visitor's own list, kept in their browser cookie.
- * No cookie yet (first visit, or after "Réinitialiser") means the sample list, dated around today.
+ * No cookie yet (first visit, or after "Réinitialiser") means the sample list, dated around today and written
+ * in the visitor's language. Once saved, the tasks are the visitor's own: they keep the language they were saved in.
  */
-export function createDemoRepository(jar: DemoCookieJar, today: () => string): TaskRepository {
+export function createDemoRepository(
+  jar: DemoCookieJar,
+  today: () => string,
+  locale: () => Locale | Promise<Locale>,
+): TaskRepository {
   async function load(): Promise<TaskFile> {
-    return decodeDemoTasks(await jar.read()) ?? { schemaVersion: CURRENT_SCHEMA_VERSION, tasks: buildSampleTasks(today()) };
+    const saved = decodeDemoTasks(await jar.read());
+    return saved ?? { schemaVersion: CURRENT_SCHEMA_VERSION, tasks: buildSampleTasks(today(), await locale()) };
   }
 
   async function save(file: TaskFile): Promise<void> {
