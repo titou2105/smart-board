@@ -3,7 +3,7 @@
   "project": {
     "name": "Smart Board",
     "tagline": "« Dis-le, c'est rangé. » Une to-do où l'assistant te pose les questions qui manquent.",
-    "updatedAt": "2026-11-19"
+    "updatedAt": "2026-11-26"
   },
   "milestones": [
     {
@@ -317,11 +317,17 @@
       "epic": "E3",
       "title": "Données de démo",
       "size": "S",
-      "status": "todo",
+      "status": "done",
+      "doneAt": "2026-11-26",
       "story": "En tant que visiteur, je veux une liste d'exemple et un bouton « Réinitialiser », afin de tester sans craindre de tout casser.",
       "criteria": [
-        "Chaque visiteur a sa propre liste (dans son navigateur)."
-      ]
+        "Chaque visiteur a sa propre liste (dans son navigateur) : deux navigateurs ne voient pas les changements l'un de l'autre.",
+        "Un nouveau visiteur voit la liste d'exemple, avec des échéances calées sur le jour de sa visite (en retard, aujourd'hui, cette semaine, plus tard).",
+        "Un bouton « Réinitialiser », visible seulement en mode démo, remet la liste d'exemple après confirmation.",
+        "Les changements tiennent après un rechargement de la page.",
+        "Le cookie est conforme (CNIL) : propriétaire, sans pistage, strictement nécessaire au service demandé, durée limitée ; une ligne d'information l'explique sous la démo."
+      ],
+      "note": "Stockage dans un cookie compressé (environ 4 Ko), démo plafonnée à 25 tâches. Le lien web / mobile par compte utilisateur relève de l'US-5.2 (connexion par lien magique) et de l'US-5.1 (Supabase)."
     },
     {
       "id": "US-3.3",

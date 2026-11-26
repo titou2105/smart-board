@@ -8,6 +8,13 @@
       "port": 3000
     },
     {
+      "name": "demo",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start", "--", "--port", "3100"],
+      "env": { "DATA_PROVIDER": "mock" },
+      "port": 3100
+    },
+    {
       "name": "cockpit",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "cockpit"],
