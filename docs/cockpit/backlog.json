@@ -347,7 +347,8 @@
       "epic": "E3",
       "title": "Démo dans la langue du visiteur",
       "size": "S",
-      "status": "in_progress",
+      "status": "done",
+      "doneAt": "2026-11-26",
       "story": "En tant que recruteur anglophone, je veux voir des tâches d'exemple en anglais, afin de comprendre la démo sans parler français.",
       "criteria": [
         "Les tâches d'exemple s'affichent dans la langue de l'interface (anglais ou français), pour un nouveau visiteur comme après « Réinitialiser ».",
