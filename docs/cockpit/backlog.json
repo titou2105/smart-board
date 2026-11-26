@@ -334,7 +334,8 @@
       "epic": "E3",
       "title": "README portfolio",
       "size": "M",
-      "status": "todo",
+      "status": "done",
+      "doneAt": "2026-11-26",
       "story": "En tant que recruteur, je veux comprendre le projet en 1 minute depuis GitHub, afin d'évaluer le travail de Thomas.",
       "criteria": [
         "README en anglais avec pitch, lien de démo, captures ou GIF, stack, lancement en local.",
@@ -726,6 +727,15 @@
       "decision": "Semaine calendaire du lundi au dimanche. Prévues = échéance dans la semaine + en retard non faites + faites cette semaine ; en cours = toutes les tâches en cours. Le filtre perso/pro s'applique aussi au bilan.",
       "related": [
         "US-2.5"
+      ]
+    },
+    {
+      "id": "D23",
+      "status": "open",
+      "question": "Les tâches de démo sont en français même quand l'interface est en anglais : faut-il les traduire selon la langue du visiteur (recruteurs anglophones) ?",
+      "related": [
+        "US-3.2",
+        "US-3.3"
       ]
     }
   ],
